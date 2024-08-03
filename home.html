@@ -479,7 +479,7 @@
             </div>
         </div>
     </header>
-    <script>
+     <script>
         function decrypt(encryptedText, secretKey) {
             var bytes = CryptoJS.AES.decrypt(encryptedText, secretKey);
             return bytes.toString(CryptoJS.enc.Utf8);
@@ -499,22 +499,25 @@
             const contentDiv = document.getElementById('content');
 
             try {
+                console.log("Encrypted username from URL:", username);
                 const decryptedUsername = decrypt(username, secretKey);
-                console.log(decryptedUsername);
+                console.log("Decrypted username:", decryptedUsername);
+
                 if (decryptedUsername === 'admin') {
                     document.body.style.display = 'flex'; // Show the body
                     contentDiv.innerHTML = '<h1 class="authorized">Welcome, Admin!</h1><p>You are authorized to view this page.</p>';
                 } else {
+                    console.log("Username is not admin");
                     alert("You are not the right person to view this page.");
                     window.location.href = 'index.html'; // Redirect to login or another page
                 }
             } catch (e) {
+                console.log("Error during decryption:", e);
                 alert("Invalid or tampered credentials.");
                 window.location.href = 'index.html'; // Redirect to login or another page
             }
         });
-    </script>
-   <div class="box-container ">
+    </script>   <div class="box-container ">
    <div class="row  ps-3 ">
     <!-- <div class="box-item"> <ul class="breadcrumb">
                     <li class="breadcrumb-item mt-2"><a href="{{url('home')}}"><i class="fa fa-home me-2"></i> Home </a></i></li>
