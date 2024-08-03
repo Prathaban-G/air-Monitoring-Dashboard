@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIR QUALITY MONITORING SYSTEM</title>
+    <link rel="icon" type="image/x-icon" href="logo.png'">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+ <!-- Latest compiled and minified CSS -->
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+   
+<!-- jQuery must be loaded first -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.min.js"></script>
+<!-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.3/mqttws31.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1d1d1d;
+            color: #fff;
+        }
+        .chart {
+            width: 300px;
+            height: 300px;
+            margin: 20px;
+        }
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+        .header {
+            background-color: #1d1d1d;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #fff;
+        }
+
+        .header-content {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .company-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .username {
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            color: #333;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .user-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 50px auto;
+        }
+
+        .circle {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            padding-bottom: 10px; /* Add padding to create space for the name */
+        }
+
+        .circle .value {
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .circle .name {
+            font-size: 14px;
+            text-align: center;
+            margin-top: 5px; /* Ensure a small gap between value and name */
+            color: #fff;
+        }
+
+        .center {
+            width: 150px;
+            height: 150px;
+            background-color: red;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px 10px rgba(255, 0, 0, 0.4), 0 0 40px 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .top-left {
+            width: 100px;
+            height: 100px;
+            top: 5%;
+            left: 5%;
+        }
+
+        .top-right {
+            width: 100px;
+            height: 100px;
+            top: 5%;
+            right: 5%;
+        }
+
+        .bottom-left {
+            width: 100px;
+            height: 100px;
+            bottom: 5%;
+            left: 5%;
+        }
+
+        .bottom-right {
+            width: 100px;
+            height: 100px;
+            bottom: 5%;
+            right: 5%;
+        }
+
+        .status {
+            font-size: 24px;
+            text-align: center;
+        }
+
+        /* Updated styles */
+        .aqi-container {
+            position: relative;
+            left:50px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .center-circle {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: #e6e600;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1d1d1d;
+    font-weight: bold;
+    box-shadow: 0 0 30px 30px rgba(230, 230, 0, 0.4), 0 0 40px 20px rgba(230, 230, 0, 0.2); /* Glow effect only on center circle */
+}
+
+        .aqi-item {
+            position: absolute;
+            width: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .aqi-o3 {
+            top: 10%;
+            left: 10%;
+        }
+
+        .aqi-no2 {
+            top: 10%;
+            right: 10%;
+        }
+
+        .aqi-pm25 {
+            bottom: 10%;
+            left: 10%;
+        }
+
+        .aqi-pm10 {
+            bottom: 10%;
+            right: 10%;
+        }
+
+        .aqi-item span:nth-child(1) {
+            font-size: 24px;
+        }
+
+        .aqi-item span:nth-child(2) {
+            font-size: 12px;
+        }
+
+        .aqi-item span:nth-child(3) {
+            font-size: 16px;
+            color: #9b59b6;
+        }
+
+        /* Gauge chart container styles */
+        .gauge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 10px;
+    background-color: #1d1d1d;
+}
+
+.gauge-item {
+    width: 30%; /* Set width to approximately one-third of the container */
+    background-color: #333;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+.content-container{
+    width:95%; /* Set width to approximately one-third of the container */
+   
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+.box-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 5px;
+    background-color: #1d1d1d;
+}
+.box-item {
+    /* Set width to approximately one-third of the container */
+    background-color: #333;
+    width: 30%; 
+    padding: 7px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    text-decoration: none;
+}
+.box-item1 {
+    /* Set width to approximately one-third of the container */
+    background-color: #333;
+    width: 10%; 
+    padding: 7px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    text-decoration: none;
+}
+.box-item2 {
+    /* Set width to approximately one-third of the container */
+    background-color: #333;
+    width: 20%; 
+    padding: 7px 5px;
+    box-shadow: 0px 0px 2px 2px rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+    cursor: pointer;
+   
+    text-align: center;
+    text-decoration: none;
+}
+.gauge-item h3 {
+    margin-bottom: 20px;
+    color: #fff; /* Ensure the text color is visible against the background */
+}
+.breadcrumb-item a {
+    color: inherit;
+    text-decoration: inherit;
+}
+/* Glow Effect  */
+.quality-card {
+        width: 200px;
+       
+        padding: 3px 10px ;
+        background-color:#00c853ce;/* Green background */
+        color: white;
+        border-radius: 10px;
+        box-shadow:  0 0 30px #00c853ce; /* Green glow */
+        text-align: left;
+        font-size: 10px;
+        font-weight: bold;
+    }
+    .quality-card1 {
+    width: 200px;
+    padding: 3px 10px;
+    background-color:#e91e62c9; /* Pink background */
+    color: white;
+    border-radius: 10px;
+    box-shadow:  0 0 30px #e91e62c9; /* Pink glow */
+    text-align: left;
+    font-size: 10px;
+    font-weight: bold;
+}
+.quality-card2 {
+    width: 200px;
+    padding: 3px 10px;
+    background-color:  #00ffff94; /* Aqua background */
+    color: white;
+    border-radius: 10px;
+    box-shadow:  0 0 30px  #00ffff94; /* Aqua glow */
+    text-align: left;
+    font-size: 10px;
+    font-weight: bold;
+}
+.quality-card3 {
+    width: 200px;
+    padding: 3px 10px;
+    background-color: #ffeb3bc4; /* Yellow background */
+    color: white;
+    border-radius: 10px;
+    box-shadow:  0 0 30px  #ffeb3bc4; /* Yellow glow */
+    text-align: left;
+    font-size: 10px;
+    font-weight: bold;
+}
+.quality-card4 {
+    width: 200px;
+    padding: 3px 10px;
+    background-color:  #ff9900d3;  /* Orange background */
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 30px  #ff9900d3; /* Orange glow */
+    text-align: left;
+    font-size: 10px;
+    font-weight: bold;
+}
+.quality-card5 {
+    width: 200px;
+    padding: 3px 10px;
+    background-color: #f44336da; /* Red background */
+    color: white;
+    border-radius: 10px;
+    box-shadow:  0 0 30px  #f44336da; /* Red glow */
+    text-align: left;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.box-item:hover {
+            text-decoration: underline;
+        }
+.modal-backdrop {
+            z-index: 1040 !important;
+        }
+        .modal-content {
+            z-index: 1050 !important;
+        }
+    .title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+
+    .modal-content {
+            background-color: #333;
+            color: #fff;
+            border: none;
+        }
+        .modal-header, .modal-footer {
+            border: none;
+        }
+        .modal-header .close {
+            color: #fff;
+        }
+        .modal-body .form-control {
+            background-color: #444;
+            color: #fff;
+            border: 1px solid #555;
+        }
+        .modal-body .form-control::placeholder {
+            color: #bbb;
+        }
+        .modal-body label {
+            color: #ddd;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+   
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="logo.png" alt="Company Logo" class="logo">
+                <span class="company-name">AIR QUALITY MONITORING SYSTEM</span>
+            </div>
+            <div class="user-section">
+                <div class="user-dropdown">
+                    <div class="username me-3"><span id="">Hi Admin</span><i class=" fa fa-angle-down" aria-hidden="true"></i></div>
+                    <div class="dropdown-content">
+                        
+                        <a href="index.html" >
+                           Log Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <script>
+        function decrypt(encryptedText, secretKey) {
+            var bytes = CryptoJS.AES.decrypt(encryptedText, secretKey);
+            return bytes.toString(CryptoJS.enc.Utf8);
+        }
+
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                username: params.get('username')
+            };
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const { username } = getQueryParams();
+            const secretKey = 'mySecretKey12345'; // Replace with your secret key
+
+            const contentDiv = document.getElementById('content');
+
+            try {
+                const decryptedUsername = decrypt(username, secretKey);
+
+                if (decryptedUsername === 'admin') {
+                    document.body.style.display = 'flex'; // Show the body
+                    contentDiv.innerHTML = '<h1 class="authorized">Welcome, Admin!</h1><p>You are authorized to view this page.</p>';
+                } else {
+                    alert("You are not the right person to view this page.");
+                    window.location.href = 'index.html'; // Redirect to login or another page
+                }
+            } catch (e) {
+                alert("Invalid or tampered credentials.");
+                window.location.href = 'index.html'; // Redirect to login or another page
+            }
+        });
+    </script>
+   <div class="box-container ">
+   <div class="row  ps-3 ">
+    <!-- <div class="box-item"> <ul class="breadcrumb">
+                    <li class="breadcrumb-item mt-2"><a href="{{url('home')}}"><i class="fa fa-home me-2"></i> Home </a></i></li>
+                    
+
+</ul></div>
+               <div class="box-item"> <div class=" mt-2"><a href="{{url('home')}}"><i class="fa fa-home me-2"></i> Home </a></i></div>
+               </div> -->
+              <div class="box-container">
+                <div ><a  class="box-item"><i class="fa fa-home me-2" title="home"></i> Home </a></div>
+               <!-- History Button -->
+<div>
+    <a class="box-item" data-toggle="modal" data-target="#historyModal">
+        <i class="fa fa-history me-2" title="History"></i> History
+    </a>
+</div>
+<i class="fa-solid fa-circle" style="font-size:25px; color: #09ff00; box-shadow: 0px 0px 20px rgba(9, 255, 0, 0.7); border-radius: 50%;"></i>
+
+<!-- Updated time -->
+<div>
+<div class="box-item2" style="position:absolute;top:110px;right:100px;">
+    <a id="last-updated" style="text-decoration:none;">
+      Last Updated: <span id="date-time"></span>
+    </a>
+</div>
+</div>
+<!-- Threshold Button -->
+<div>
+    <div class="box-item1" style="position:absolute;top:65px;right:30px;">
+        <a class="" data-toggle="modal" data-target="#thresholdModal" style="text-decoration:none;">
+            <i class="fa fa-cog me-2" title="Threshold"></i> Threshold
+        </a>
+    </div>
+</div> </div>
+
+            </div>
+   </div>
+ <!-- History Modal -->
+ <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="historyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="historyModalLabel">History</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="startDate">Start Date:</label>
+                            <input type="date" class="form-control" id="startDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate">End Date:</label>
+                            <input type="date" class="form-control" id="endDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="parameter">Parameter:</label>
+                            <input type="text" class="form-control" id="parameter">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Threshold Modal -->
+    <div class="modal fade" id="thresholdModal" tabindex="-1" role="dialog" aria-labelledby="thresholdModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="thresholdModalLabel">Set Threshold</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <!-- Repeat these rows for each parameter -->
+                        <div class="form-group row">
+                            <label for="param1" class="col-sm-4 col-form-label">Ammonia (NH3) :</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="param1Min" placeholder="Min">
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="param1Max" placeholder="Max">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="param1" class="col-sm-4 col-form-label">carbon dioxide (CO2) :</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="param1Min" placeholder="Min">
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="param1Max" placeholder="Max">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="param1" class="col-sm-4 col-form-label">Benzene (C6H6):</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="param1Min" placeholder="Min">
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="param1Max" placeholder="Max">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="param1" class="col-sm-4 col-form-label">Alcohol (C2H5OH):</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="param1Min" placeholder="Min">
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="param1Max" placeholder="Max">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="param1" class="col-sm-4 col-form-label">smoke:</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="param1Min" placeholder="Min">
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="param1Max" placeholder="Max">
+                            </div>
+                        </div>
+                        <!-- Add more rows as needed -->
+                        <button type="submit" class="btn btn-primary">Set Threshold</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4">
+            <div class="container">
+    <div class="aqi-container">
+        <div class="center-circle" id="center-circle">
+            <span id="aqi-status">Moderate</span>
+        </div>
+        <div class="aqi-item aqi-o3">
+            <span id="aqi-o3-value">133</span>
+            <span>µg/m³</span>
+            <span>O₃</span>
+        </div>
+        <div class="aqi-item aqi-no2">
+            <span id="aqi-no2-value">103</span>
+            <span>µg/m³</span>
+            <span>NO₂</span>
+        </div>
+        <div class="aqi-item aqi-pm25">
+            <span id="aqi-pm25-value">138</span>
+            <span>µg/m³</span>
+            <span>PM 2.5</span>
+        </div>
+        <div class="aqi-item aqi-pm10">
+            <span id="aqi-pm10-value">526</span>
+            <span>µg/m³</span>
+            <span>PM 10</span>
+        </div>
+    </div>
+</div>
+
+            </div>
+
+
+            <div class="col-lg-8 ">
+                <div class="content-container p-3">
+                    <div class="row px-5 py-4">
+                        Air Index
+
+                    </div>
+                    <div class="row px-5">
+                      <div class="col-lg-4"> 
+
+    <div class="quality-card">
+<div class="title">Excellent</div>
+<div class="content">
+<div>Particles &lt; 2.5 µm (PM2.5)</div>
+<div>0-10</div>
+<div>Particles &lt; 10 µm (PM10)</div>
+<div>0-20</div>
+<div>Nitrogen dioxide (NO2)</div>
+<div>0-40</div>
+<div>Ozone (O3)</div>
+<div>0-50</div>
+<div>Sulphur dioxide (SO2)</div>
+<div>0-100</div>
+</div>
+</div>
+
+</div>
+<div class="col-lg-4"> 
+
+<div class="quality-card1">
+<div class="title">Good</div>
+<div class="content">
+<div>Particles &lt; 2.5 µm (PM2.5)</div>
+<div>0-10</div>
+<div>Particles &lt; 10 µm (PM10)</div>
+<div>0-20</div>
+<div>Nitrogen dioxide (NO2)</div>
+<div>0-40</div>
+<div>Ozone (O3)</div>
+<div>0-50</div>
+<div>Sulphur dioxide (SO2)</div>
+<div>0-100</div>
+</div>
+</div>
+
+</div>
+<div class="col-lg-4"> 
+
+<div class="quality-card2">
+<div class="title">Fair</div>
+<div class="content">
+<div>Particles &lt; 2.5 µm (PM2.5)</div>
+<div>0-10</div>
+<div>Particles &lt; 10 µm (PM10)</div>
+<div>0-20</div>
+<div>Nitrogen dioxide (NO2)</div>
+<div>0-40</div>
+<div>Ozone (O3)</div>
+<div>0-50</div>
+<div>Sulphur dioxide (SO2)</div>
+<div>0-100</div>
+</div>
+</div>
+
+</div>
+            </div>
+            <div class="row mt-5 px-5">
+                      <div class="col-lg-4"> 
+
+    <div class="quality-card3">
+<div class="title">Moderate</div>
+<div class="content">
+<div>Particles &lt; 2.5 µm (PM2.5)</div>
+<div>0-10</div>
+<div>Particles &lt; 10 µm (PM10)</div>
+<div>0-20</div>
+<div>Nitrogen dioxide (NO2)</div>
+<div>0-40</div>
+<div>Ozone (O3)</div>
+<div>0-50</div>
+<div>Sulphur dioxide (SO2)</div>
+<div>0-100</div>
+</div>
+</div>
+
+</div>
+<div class="col-lg-4"> 
+
+<div class="quality-card4">
+<div class="title">poor</div>
+<div class="content">
+<div>Particles &lt; 2.5 µm (PM2.5)</div>
+<div>0-10</div>
+<div>Particles &lt; 10 µm (PM10)</div>
+<div>0-20</div>
+<div>Nitrogen dioxide (NO2)</div>
+<div>0-40</div>
+<div>Ozone (O3)</div>
+<div>0-50</div>
+<div>Sulphur dioxide (SO2)</div>
+<div>0-100</div>
+</div>
+</div>
+
+</div>
+<div class="col-lg-4"> 
+
+<div class="quality-card5">
+<div class="title">very poor</div>
+<div class="content">
+<div>Particles &lt; 2.5 µm (PM2.5)</div>
+<div>0-10</div>
+<div>Particles &lt; 10 µm (PM10)</div>
+<div>0-20</div>
+<div>Nitrogen dioxide (NO2)</div>
+<div>0-40</div>
+<div>Ozone (O3)</div>
+<div>0-50</div>
+<div>Sulphur dioxide (SO2)</div>
+<div>0-100</div>
+</div>
+</div>
+
+</div>
+            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="gauge-container">
+        <div class="gauge-item">
+            <h3>Ozone</h3>
+            <div class="chart-container"><div id="gauge-ozone" class="chart"></div></div>
+            
+        </div>
+        <div class="gauge-item">
+            <h3>Humidity</h3>
+            <div class="chart-container"> <div id="gauge-humidity" class="chart"></div></div>
+        </div>
+        <div class="gauge-item">
+            <h3>Temperature</h3> 
+            <div class="chart-container"> <div id="gauge-temperature" class="chart"></div></div> 
+        </div>
+        <div class="gauge-item">
+            <h3>Air Pollution PM 2.5</h3>
+            <div class="chart-container"> <div id="gauge-pm25" class="chart"></div></div>
+        </div>
+        <div class="gauge-item">
+            <h3>Air Pollution PM 10</h3>
+            <div class="chart-container">   <div id="gauge-pm10" class="chart"></div></div>
+        </div>
+        <div class="gauge-item">
+            <h3>Nitrogen Dioxide</h3>
+            <div class="chart-container">    <div id="gauge-no2" class="chart"></div></div>
+        </div>
+    </div>
+<footer class="text-center text-white">&copy;All Rights Reserved By OLIVE IOT</footer>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@progress/kendo-ui/js/kendo.all.min.js"></script> -->
+  
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const gauges = {};
+
+            function getRandomNumber(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function createGauge(elementId, value, max, label) {
+                const chart = echarts.init(document.getElementById(elementId));
+                const option = {
+                    tooltip: {
+                        formatter: '{a} <br/>{b} : {c}%' // Tooltip format
+                    },
+                    series: [
+                        {
+                            name: 'Pressure', // Series name (could be customized per gauge)
+                            type: 'gauge',
+                            progress: {
+                                show: true
+                            },
+                            detail: {
+                                valueAnimation: true,
+                                formatter: '{value}',
+                                color: '#FFFFFF', // Set detail text color to white
+                                offsetCenter: [0, '70%'], // Adjust the position of the value
+                                fontSize: 30 // Increase font size if necessary
+                            },
+                            data: [
+                                {
+                                    value: value,
+                                    name: label
+                                }
+                            ],
+                            axisLine: {
+                                lineStyle: {
+                                    color: [
+                                        [0.25, '#FF6E76'],
+                                        [0.5, '#FDDD60'],
+                                        [0.75, '#58D9F9'],
+                                        [1, '#7CFFB2']
+                                    ],
+                                    width: 6
+                                }
+                            },
+                            pointer: {
+                                length: '70%',
+                                width: 8
+                            },
+                            axisLabel: {
+                                color: '#FFFFFF' // Set axis labels color to white
+                            },
+                            title: {
+                                show: true,
+                                color: '#FFFFFF', // Set title text color to white
+                                offsetCenter: [0, '120%'], // Position the label below the gauge
+                                fontSize: 20 // Set font size for the label
+                            }
+                        }
+                    ]
+                };
+                chart.setOption(option);
+                gauges[elementId] = chart; // Store the chart instance for future updates
+            }
+
+            function updateGauge(elementId, value) {
+                const chart = gauges[elementId];
+                const option = chart.getOption();
+                option.series[0].data[0].value = value;
+                chart.setOption(option);
+            }
+
+            // Create initial gauges
+            createGauge('gauge-ozone', getRandomNumber(0, 100), 160, 'Ozone');
+            createGauge('gauge-humidity', getRandomNumber(0, 100), 100, 'Humidity');
+            createGauge('gauge-temperature', getRandomNumber(0, 100), 30, 'Temperature');
+            createGauge('gauge-pm25', getRandomNumber(0, 100), 500, 'PM 2.5');
+            createGauge('gauge-pm10', getRandomNumber(0, 100), 600, 'PM 10');
+            createGauge('gauge-no2', getRandomNumber(0, 100), 1000, 'NO2');
+
+            // Update gauges every 10 seconds
+            setInterval(function () {
+                updateGauge('gauge-ozone', getRandomNumber(0, 100));
+                updateGauge('gauge-humidity', getRandomNumber(0, 100));
+                updateGauge('gauge-temperature', getRandomNumber(0, 100));
+                updateGauge('gauge-pm25', getRandomNumber(0, 100));
+                updateGauge('gauge-pm10', getRandomNumber(0, 100));
+                updateGauge('gauge-no2', getRandomNumber(0, 100));
+            }, 10000);
+        });
+    </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function updateAQI() {
+            const o3 = getRandomNumber(0, 160);
+            const no2 = getRandomNumber(0, 1000);
+            const pm25 = getRandomNumber(0, 500);
+            const pm10 = getRandomNumber(0, 600);
+
+            document.getElementById('aqi-o3-value').textContent = o3;
+            document.getElementById('aqi-no2-value').textContent = no2;
+            document.getElementById('aqi-pm25-value').textContent = pm25;
+            document.getElementById('aqi-pm10-value').textContent = pm10;
+
+            const aqiStatus = document.getElementById('aqi-status');
+            const centerCircle = document.getElementById('center-circle');
+            const aqiLevels = [o3, no2, pm25, pm10];
+            const maxAQI = Math.max(...aqiLevels);
+
+            if (maxAQI <= 50) {
+                aqiStatus.textContent = 'Excellent';
+                centerCircle.style.backgroundColor = '#00c853ce';
+                centerCircle.style.boxShadow = '0 0 30px 30px rgba(0, 200, 83, 0.4), 0 0 40px 20px rgba(0, 200, 83, 0.2)';
+            } else if (maxAQI <= 100) {
+                aqiStatus.textContent = 'Good';
+                centerCircle.style.backgroundColor = '#e91e62c9';
+                centerCircle.style.boxShadow = '0 0 30px 30px rgba(233, 30, 98, 0.4), 0 0 40px 20px rgba(233, 30, 98, 0.2)';
+            } else if (maxAQI <= 150) {
+                aqiStatus.textContent = 'Fair';
+                centerCircle.style.backgroundColor = '#00ffff94';
+                centerCircle.style.boxShadow = '0 0 30px 30px rgba(0, 255, 255, 0.4), 0 0 40px 20px rgba(0, 255, 255, 0.2)';
+            } else if (maxAQI <= 200) {
+                aqiStatus.textContent = 'Moderate';
+                centerCircle.style.backgroundColor = '#ffeb3bc4';
+                centerCircle.style.boxShadow = '0 0 30px 30px rgba(255, 235, 59, 0.4), 0 0 40px 20px rgba(255, 235, 59, 0.2)';
+            } else if (maxAQI <= 300) {
+                aqiStatus.textContent = 'Poor';
+                centerCircle.style.backgroundColor = '#ff9900d3';
+                centerCircle.style.boxShadow = '0 0 30px 30px rgba(255, 153, 0, 0.4), 0 0 40px 20px rgba(255, 153, 0, 0.2)';
+            } else if (maxAQI <= 400) {
+                aqiStatus.textContent = 'Very Poor';
+                centerCircle.style.backgroundColor = '#f44336da';
+                centerCircle.style.boxShadow = '0 0 30px 30px rgba(244, 67, 54, 0.4), 0 0 40px 20px rgba(244, 67, 54, 0.2)';
+            }
+            else {
+                aqiStatus.textContent = 'Excellent';
+                centerCircle.style.backgroundColor = '#00c853ce';
+                centerCircle.style.boxShadow = '0 0 30px 30px rgba(0, 200, 83, 0.4), 0 0 40px 20px rgba(0, 200, 83, 0.2)';
+        
+            }
+        }
+
+        updateAQI();
+        setInterval(updateAQI, 20000);
+    });
+</script>
+<script>
+    function updateDateTime() {
+        const now = new Date();
+        const formattedDate = now.toLocaleDateString();
+        const formattedTime = now.toLocaleTimeString();
+        document.getElementById('date-time').innerText = `${formattedDate} ${formattedTime}`;
+    }
+
+    // Initial call to set the time right away
+    updateDateTime();
+
+    // Update every 10 seconds
+    setInterval(updateDateTime, 10000);
+</script>
+
+</body>
+
+</html>
