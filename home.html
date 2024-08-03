@@ -500,7 +500,7 @@
 
             try {
                 const decryptedUsername = decrypt(username, secretKey);
-
+                console.log(decryptedUsername);
                 if (decryptedUsername === 'admin') {
                     document.body.style.display = 'flex'; // Show the body
                     contentDiv.innerHTML = '<h1 class="authorized">Welcome, Admin!</h1><p>You are authorized to view this page.</p>';
