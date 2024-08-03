@@ -484,7 +484,7 @@
             try {
                 var bytes = CryptoJS.AES.decrypt(encryptedText, secretKey);
                 var decryptedText = bytes.toString(CryptoJS.enc.Utf8);
-                console.log("Decryption successful:", decryptedText);
+            
                 return decryptedText;
             } catch (error) {
                 console.error("Error during decryption function:", error);
@@ -512,15 +512,14 @@
                 }
 
                 const decryptedUsername = decrypt(username, secretKey);
-                console.log("Decrypted username:", decryptedUsername);
-
+               
                 if (!decryptedUsername) {
                     throw new Error("Decrypted username is empty.");
                 }
 
                 if (decryptedUsername === 'admin') {
                     document.body.style.display = 'flex'; // Show the body
-                    contentDiv.innerHTML = '<h1 class="authorized">Welcome, Admin!</h1><p>You are authorized to view this page.</p>';
+                    
                 } else {
                     console.log("Username is not admin");
                     alert("You are not the right person to view this page.");
