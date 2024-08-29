@@ -124,7 +124,7 @@
             position: relative;
             width: 400px;
             height: 400px;
-            margin: 50px auto;
+            margin: 50px 10px;
         }
 
         .circle {
@@ -134,6 +134,7 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
+          
             border: 2px solid #fff;
             padding-bottom: 10px; /* Add padding to create space for the name */
         }
@@ -151,8 +152,8 @@
         }
 
         .center {
-            width: 150px;
-            height: 150px;
+            width: 250px;
+            height: 250px;
             background-color: red;
             top: 50%;
             left: 50%;
@@ -190,6 +191,7 @@
 
         .status {
             font-size: 24px;
+            color: white;
             text-align: center;
         }
 
@@ -197,8 +199,8 @@
         .aqi-container {
             position: relative;
             left:50px;
-            width: 300px;
-            height: 300px;
+            width: 500px;
+            height: 500px;
             background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
             border-radius: 50%;
             display: flex;
@@ -208,8 +210,8 @@
 
         .center-circle {
     position: absolute;
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     background-color: #e6e600;
     border-radius: 50%;
     display: flex;
@@ -253,15 +255,15 @@
         }
 
         .aqi-item span:nth-child(1) {
-            font-size: 24px;
+            font-size: 34px;
         }
 
         .aqi-item span:nth-child(2) {
-            font-size: 12px;
+            font-size: 22px;
         }
 
         .aqi-item span:nth-child(3) {
-            font-size: 16px;
+            font-size: 26px;
             color: #9b59b6;
         }
 
@@ -274,7 +276,16 @@
     padding: 10px;
     background-color: #1d1d1d;
 }
+@media screen and (max-width: 768px) {
+    .gauge-container {
+      
+        justify-content: center;
+        padding: 10px;
+        background-color: #1d1d1d;
+    }
 
+    
+}
 .gauge-item {
     width: 30%; /* Set width to approximately one-third of the container */
     background-color: #333;
@@ -285,7 +296,7 @@
 }
 .content-container{
     width:95%; /* Set width to approximately one-third of the container */
-   
+       background-color: #333;
     padding: 5px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -295,7 +306,9 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    padding: 5px;
+    padding-top: 8px ;
+    padding-bottom: 5px;
+    padding-left: 20px;
     background-color: #1d1d1d;
 }
 .box-item {
@@ -323,9 +336,9 @@
 .box-item2 {
     /* Set width to approximately one-third of the container */
     background-color: #333;
-    width: 20%; 
+    width: 30%; 
     padding: 7px 5px;
-    box-shadow: 0px 0px 2px 2px rgba(255, 255, 255, 0.6);
+   
     border-radius: 5px;
     cursor: pointer;
    
@@ -342,70 +355,70 @@
 }
 /* Glow Effect  */
 .quality-card {
-        width: 200px;
+        width: 300px;
        
-        padding: 3px 10px ;
+        padding: 8px 30px ;
         background-color:#00c853ce;/* Green background */
         color: white;
         border-radius: 10px;
         box-shadow:  0 0 30px #00c853ce; /* Green glow */
         text-align: left;
-        font-size: 10px;
+        font-size: 13px;
         font-weight: bold;
     }
     .quality-card1 {
-    width: 200px;
-    padding: 3px 10px;
+    width: 300px;
+  padding: 8px 30px ;
     background-color:#e91e62c9; /* Pink background */
     color: white;
     border-radius: 10px;
     box-shadow:  0 0 30px #e91e62c9; /* Pink glow */
     text-align: left;
-    font-size: 10px;
+    font-size: 13px;
     font-weight: bold;
 }
 .quality-card2 {
-    width: 200px;
-    padding: 3px 10px;
+    width: 300px;
+  padding: 8px 30px ;
     background-color:  #00ffff94; /* Aqua background */
     color: white;
     border-radius: 10px;
     box-shadow:  0 0 30px  #00ffff94; /* Aqua glow */
     text-align: left;
-    font-size: 10px;
+    font-size: 13px;
     font-weight: bold;
 }
 .quality-card3 {
-    width: 200px;
-    padding: 3px 10px;
+    width: 300px;
+  padding: 8px 30px ;
     background-color: #ffeb3bc4; /* Yellow background */
     color: white;
     border-radius: 10px;
     box-shadow:  0 0 30px  #ffeb3bc4; /* Yellow glow */
     text-align: left;
-    font-size: 10px;
+    font-size: 13px;
     font-weight: bold;
 }
 .quality-card4 {
-    width: 200px;
-    padding: 3px 10px;
+    width: 300px;
+  padding: 8px 30px ;
     background-color:  #ff9900d3;  /* Orange background */
     color: white;
     border-radius: 10px;
     box-shadow: 0 0 30px  #ff9900d3; /* Orange glow */
     text-align: left;
-    font-size: 10px;
+    font-size: 13px;
     font-weight: bold;
 }
 .quality-card5 {
-    width: 200px;
-    padding: 3px 10px;
+    width: 300px;
+  padding: 8px 30px ;
     background-color: #f44336da; /* Red background */
     color: white;
     border-radius: 10px;
     box-shadow:  0 0 30px  #f44336da; /* Red glow */
     text-align: left;
-    font-size: 10px;
+    font-size: 13px;
     font-weight: bold;
 }
 
@@ -455,7 +468,9 @@
             background-color: #0056b3;
             border-color: #004085;
         }
-   
+        .aqi-value{
+            font-size: 30px;
+        }
     </style>
 </head>
 
@@ -541,7 +556,7 @@
 </ul></div>
                <div class="box-item"> <div class=" mt-2"><a href="{{url('home')}}"><i class="fa fa-home me-2"></i> Home </a></i></div>
                </div> -->
-              <div class="box-container">
+              <div class="box-container ">
                 <div ><a  class="box-item"><i class="fa fa-home me-2" title="home"></i> Home </a></div>
                <!-- History Button -->
 <div>
@@ -553,11 +568,7 @@
 
 <!-- Updated time -->
 <div>
-<div class="box-item2" style="position:absolute;top:110px;right:100px;">
-    <a id="last-updated" style="text-decoration:none;">
-      Last Updated: <span id="date-time"></span>
-    </a>
-</div>
+
 </div>
 <!-- Threshold Button -->
 <div>
@@ -582,19 +593,28 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="form-group">
-                            <label for="startDate">Start Date:</label>
-                            <input type="date" class="form-control" id="startDate">
+                        <div class="mb-3">
+                            <label for="startDate" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="startDate" required>
                         </div>
-                        <div class="form-group">
-                            <label for="endDate">End Date:</label>
-                            <input type="date" class="form-control" id="endDate">
+                        <div class="mb-3">
+                            <label for="endDate" class="form-label">End Date</label>
+                            <input type="date" class="form-control" id="endDate" required>
                         </div>
-                        <div class="form-group">
-                            <label for="parameter">Parameter:</label>
-                            <input type="text" class="form-control" id="parameter">
+                        <div class="mb-3">
+                            <label for="parameter" class="form-label">Select Parameter</label>
+                            <select class="form-control" id="parameter"  required>
+                                <option value="NH3">Ammonia (NH₃)</option>
+                                <option value="NOx">Nitrogen Oxides (NOₓ)</option>
+                                <option value="Alcohol">Alcohol</option>
+                                <option value="Benzene">Benzene</option>
+                                <option value="Smoke">Smoke</option>
+                                <option value="CO2">Carbon Dioxide (CO₂)</option>
+                            </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-danger" class="close" data-dismiss="modal">close</button>
+                        <button type="reset" class="btn btn-warning">Clear</button>
+                        <button type="submit" class="btn btn-success">Download CSV</button>
                     </form>
                 </div>
             </div>
@@ -613,53 +633,32 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <!-- Repeat these rows for each parameter -->
-                        <div class="form-group row">
-                            <label for="param1" class="col-sm-4 col-form-label">Ammonia (NH3) :</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="param1Min" placeholder="Min">
-                            </div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="param1Max" placeholder="Max">
-                            </div>
+                        <div class="mb-3">
+                            <label for="ammonia" class="form-label">Ammonia (NH₃)</label>
+                            <input type="number" class="form-control" id="ammonia" placeholder="Enter threshold for Ammonia">
                         </div>
-                        <div class="form-group row">
-                            <label for="param1" class="col-sm-4 col-form-label">carbon dioxide (CO2) :</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="param1Min" placeholder="Min">
-                            </div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="param1Max" placeholder="Max">
-                            </div>
+                        <div class="mb-3">
+                            <label for="nitrogen" class="form-label">Nitrogen Oxides (NOₓ)</label>
+                            <input type="number" class="form-control" id="nitrogen" placeholder="Enter threshold for Nitrogen Oxides">
                         </div>
-                        <div class="form-group row">
-                            <label for="param1" class="col-sm-4 col-form-label">Benzene (C6H6):</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="param1Min" placeholder="Min">
-                            </div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="param1Max" placeholder="Max">
-                            </div>
+                        <div class="mb-3">
+                            <label for="alcohol" class="form-label">Alcohol</label>
+                            <input type="number" class="form-control" id="alcohol" placeholder="Enter threshold for Alcohol">
                         </div>
-                        <div class="form-group row">
-                            <label for="param1" class="col-sm-4 col-form-label">Alcohol (C2H5OH):</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="param1Min" placeholder="Min">
-                            </div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="param1Max" placeholder="Max">
-                            </div>
+                        <div class="mb-3">
+                            <label for="benzene" class="form-label">Benzene</label>
+                            <input type="number" class="form-control" id="benzene" placeholder="Enter threshold for Benzene">
                         </div>
-                        <div class="form-group row">
-                            <label for="param1" class="col-sm-4 col-form-label">smoke:</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="param1Min" placeholder="Min">
-                            </div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="param1Max" placeholder="Max">
-                            </div>
+                        <div class="mb-3">
+                            <label for="smoke" class="form-label">Smoke</label>
+                            <input type="number" class="form-control" id="smoke" placeholder="Enter threshold for Smoke">
                         </div>
-                        <!-- Add more rows as needed -->
+                        <div class="mb-3">
+                            <label for="co2" class="form-label">Carbon Dioxide (CO₂)</label>
+                            <input type="number" class="form-control" id="co2" placeholder="Enter threshold for CO₂">
+                        </div>
+                        <button type="button" class="btn btn-danger" class="close" data-dismiss="modal">close</button>
+                        <button type="reset" class="btn btn-warning">Clear</button>
                         <button type="submit" class="btn btn-primary">Set Threshold</button>
                     </form>
                 </div>
@@ -672,27 +671,27 @@
             <div class="container">
     <div class="aqi-container">
         <div class="center-circle" id="center-circle">
-            <span id="aqi-status">Moderate</span>
+            <span id="aqi-status" class="status">Moderate</span>
         </div>
         <div class="aqi-item aqi-o3">
-            <span id="aqi-o3-value">133</span>
+            <span class="aqi-value" id="aqi-o3-value">133</span>
             <span>µg/m³</span>
             <span>O₃</span>
         </div>
         <div class="aqi-item aqi-no2">
-            <span id="aqi-no2-value">103</span>
+            <span class="aqi-value" id="aqi-no2-value">103</span>
             <span>µg/m³</span>
             <span>NO₂</span>
         </div>
         <div class="aqi-item aqi-pm25">
-            <span id="aqi-pm25-value">138</span>
+            <span class="aqi-value" id="aqi-pm25-value">138</span>
             <span>µg/m³</span>
-            <span>PM 2.5</span>
+            <span>PM </span>
         </div>
         <div class="aqi-item aqi-pm10">
-            <span id="aqi-pm10-value">526</span>
+            <span class="aqi-value" id="aqi-pm10-value">526</span>
             <span>µg/m³</span>
-            <span>PM 10</span>
+            <span>PM </span>
         </div>
     </div>
 </div>
@@ -705,11 +704,15 @@
                     <div class="row px-5 py-4">
                         Air Index
 
+                    </div><div class="box-item2" style="position:absolute;top:10px;right:90px;">
+                        <a id="last-updated" style="text-decoration:none;">
+                          Last Updated: <span id="date-time"></span>
+                        </a>
                     </div>
                     <div class="row px-5">
                       <div class="col-lg-4"> 
 
-    <div class="quality-card">
+    <div class="quality-card ">
 <div class="title">Excellent</div>
 <div class="content">
 <div>Particles &lt; 2.5 µm (PM2.5)</div>
@@ -804,7 +807,7 @@
 </div>
 
 </div>
-<div class="col-lg-4"> 
+<div class="col-lg-4 "> 
 
 <div class="quality-card5">
 <div class="title">very poor</div>
@@ -830,7 +833,7 @@
     </div>
 
     <div class="gauge-container">
-        <div class="gauge-item">
+        <div class="gauge-item ">
             <h3>Ozone</h3>
             <div class="chart-container"><div id="gauge-ozone" class="chart"></div></div>
             
