@@ -29,6 +29,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
+
     <style>
         body {
             margin: 0;
@@ -124,7 +129,7 @@
             position: relative;
             width: 400px;
             height: 400px;
-            margin: 50px 10px;
+            margin: 50px auto;
         }
 
         .circle {
@@ -134,7 +139,6 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-          
             border: 2px solid #fff;
             padding-bottom: 10px; /* Add padding to create space for the name */
         }
@@ -152,8 +156,8 @@
         }
 
         .center {
-            width: 250px;
-            height: 250px;
+            width: 150px;
+            height: 150px;
             background-color: red;
             top: 50%;
             left: 50%;
@@ -191,16 +195,15 @@
 
         .status {
             font-size: 24px;
-            color: white;
             text-align: center;
         }
 
         /* Updated styles */
         .aqi-container {
             position: relative;
-            left:50px;
-            width: 500px;
-            height: 500px;
+            left:0px;
+            width: 400px;
+            height: 400px;
             background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
             border-radius: 50%;
             display: flex;
@@ -210,8 +213,8 @@
 
         .center-circle {
     position: absolute;
-    width: 200px;
-    height: 200px;
+    width: 170px;
+    height: 170px;
     background-color: #e6e600;
     border-radius: 50%;
     display: flex;
@@ -259,7 +262,7 @@
         }
 
         .aqi-item span:nth-child(2) {
-            font-size: 22px;
+            font-size: 14px;
         }
 
         .aqi-item span:nth-child(3) {
@@ -276,16 +279,7 @@
     padding: 10px;
     background-color: #1d1d1d;
 }
-@media screen and (max-width: 768px) {
-    .gauge-container {
-      
-        justify-content: center;
-        padding: 10px;
-        background-color: #1d1d1d;
-    }
 
-    
-}
 .gauge-item {
     width: 30%; /* Set width to approximately one-third of the container */
     background-color: #333;
@@ -296,7 +290,7 @@
 }
 .content-container{
     width:95%; /* Set width to approximately one-third of the container */
-       background-color: #333;
+    background-color: #333;
     padding: 5px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -306,9 +300,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    padding-top: 8px ;
-    padding-bottom: 5px;
-    padding-left: 20px;
+    padding: 5px;
     background-color: #1d1d1d;
 }
 .box-item {
@@ -336,7 +328,7 @@
 .box-item2 {
     /* Set width to approximately one-third of the container */
     background-color: #333;
-    width: 30%; 
+    width: 50%; 
     padding: 7px 5px;
    
     border-radius: 5px;
@@ -355,70 +347,76 @@
 }
 /* Glow Effect  */
 .quality-card {
-        width: 300px;
+        width: 230px;
        
-        padding: 8px 30px ;
+        padding: 10px 0px 2px 30px ;
         background-color:#00c853ce;/* Green background */
         color: white;
         border-radius: 10px;
-        box-shadow:  0 0 30px #00c853ce; /* Green glow */
+        font-family: Arial, Helvetica, sans-serif;
+        box-shadow:  0 0 30px #00c8539d; /* Green glow */
         text-align: left;
-        font-size: 13px;
-        font-weight: bold;
+        font-size: 10px;
+       letter-spacing: 2px;
+       font-weight: bold;
     }
     .quality-card1 {
-    width: 300px;
-  padding: 8px 30px ;
+    width: 230px;
+   padding:10px 0px 2px 30px;
     background-color:#e91e62c9; /* Pink background */
     color: white;
     border-radius: 10px;
-    box-shadow:  0 0 30px #e91e62c9; /* Pink glow */
+    box-shadow:  0 0 30px #e91e629a; /* Pink glow */
     text-align: left;
-    font-size: 13px;
+    font-size: 10px;
+    letter-spacing:2px;
     font-weight: bold;
 }
 .quality-card2 {
-    width: 300px;
-  padding: 8px 30px ;
+    width: 230px;
+   padding:10px 0px 2px 30px;
     background-color:  #00ffff94; /* Aqua background */
     color: white;
     border-radius: 10px;
-    box-shadow:  0 0 30px  #00ffff94; /* Aqua glow */
+    box-shadow:  0 0 30px  #00ffff85; /* Aqua glow */
     text-align: left;
-    font-size: 13px;
+    font-size: 10px;
+    letter-spacing:2px;
     font-weight: bold;
 }
 .quality-card3 {
-    width: 300px;
-  padding: 8px 30px ;
-    background-color: #ffeb3bc4; /* Yellow background */
+    width: 230px;
+   padding:10px 0px 2px 30px;
+    background-color: #b3a102c4; /* Yellow background */
     color: white;
     border-radius: 10px;
-    box-shadow:  0 0 30px  #ffeb3bc4; /* Yellow glow */
+    box-shadow:  0 0 30px  #ffeb3b9c; /* Yellow glow */
     text-align: left;
-    font-size: 13px;
+    font-size: 10px;
+    letter-spacing:2px;
     font-weight: bold;
 }
 .quality-card4 {
-    width: 300px;
-  padding: 8px 30px ;
+    width: 230px;
+   padding:10px 0px 2px 30px;
     background-color:  #ff9900d3;  /* Orange background */
     color: white;
     border-radius: 10px;
-    box-shadow: 0 0 30px  #ff9900d3; /* Orange glow */
+    box-shadow: 0 0 30px  #ff990094; /* Orange glow */
     text-align: left;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 10px;
+    letter-spacing:2px;
 }
 .quality-card5 {
-    width: 300px;
-  padding: 8px 30px ;
+    width: 230px;
+   padding:10px 0px 2px 30px;
     background-color: #f44336da; /* Red background */
     color: white;
     border-radius: 10px;
-    box-shadow:  0 0 30px  #f44336da; /* Red glow */
+    box-shadow:  0 0 30px  #f443367e; /* Red glow */
     text-align: left;
-    font-size: 13px;
+    font-size: 10px;
+    letter-spacing:2px;
     font-weight: bold;
 }
 
@@ -468,9 +466,36 @@
             background-color: #0056b3;
             border-color: #004085;
         }
-        .aqi-value{
-            font-size: 30px;
-        }
+
+
+        .card {
+  
+   border-radius: 10px;
+  
+   margin: auto;
+   background-color:#1d1d1d; /* Example background color */
+   color: white; /* Ensure text is readable */
+}
+
+.card-body {
+   padding: 20px;
+}
+
+    .card-title {
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.5em;
+    }
+
+    #Historychart {
+      max-width: 100%;
+    }
+   
+
+    /* Billboard.js dark theme adjustments */
+
+/* Hide legend if not needed */
+
     </style>
 </head>
 
@@ -483,7 +508,7 @@
             </div>
             <div class="user-section">
                 <div class="user-dropdown">
-                    <div class="username me-3"><span id="">Hi Admin</span><i class=" fa fa-angle-down" aria-hidden="true"></i></div>
+                    <div class="username me-3"><span id="">Hi Admin </span><i class=" fa fa-angle-down" aria-hidden="true"></i></div>
                     <div class="dropdown-content">
                         
                         <a href="index.html" >
@@ -496,15 +521,8 @@
     </header>
     <script>
         function decrypt(encryptedText, secretKey) {
-            try {
-                var bytes = CryptoJS.AES.decrypt(encryptedText, secretKey);
-                var decryptedText = bytes.toString(CryptoJS.enc.Utf8);
-            
-                return decryptedText;
-            } catch (error) {
-                console.error("Error during decryption function:", error);
-                throw error;
-            }
+            var bytes = CryptoJS.AES.decrypt(encryptedText, secretKey);
+            return bytes.toString(CryptoJS.enc.Utf8);
         }
 
         function getQueryParams() {
@@ -521,33 +539,22 @@
             const contentDiv = document.getElementById('content');
 
             try {
-                console.log("Encrypted username from URL:", username);
-                if (!username) {
-                    throw new Error("No username parameter in URL.");
-                }
-
                 const decryptedUsername = decrypt(username, secretKey);
-               
-                if (!decryptedUsername) {
-                    throw new Error("Decrypted username is empty.");
-                }
 
                 if (decryptedUsername === 'admin') {
-                  
-                    
+                   // document.body.style.display = 'flex'; // Show the body
+                  //  contentDiv.innerHTML = '<h1 class="authorized">Welcome, Admin!</h1><p>You are authorized to view this page.</p>';
                 } else {
-                    console.log("Username is not admin");
                     alert("You are not the right person to view this page.");
                     window.location.href = 'index.html'; // Redirect to login or another page
                 }
             } catch (e) {
-                console.error("Error during decryption process:", e);
                 alert("Invalid or tampered credentials.");
                 window.location.href = 'index.html'; // Redirect to login or another page
             }
         });
     </script>
- <div class="box-container ">
+   <div class="box-container ">
    <div class="row  ps-3 ">
     <!-- <div class="box-item"> <ul class="breadcrumb">
                     <li class="breadcrumb-item mt-2"><a href="{{url('home')}}"><i class="fa fa-home me-2"></i> Home </a></i></li>
@@ -556,7 +563,7 @@
 </ul></div>
                <div class="box-item"> <div class=" mt-2"><a href="{{url('home')}}"><i class="fa fa-home me-2"></i> Home </a></i></div>
                </div> -->
-              <div class="box-container ">
+              <div class="box-container">
                 <div ><a  class="box-item"><i class="fa fa-home me-2" title="home"></i> Home </a></div>
                <!-- History Button -->
 <div>
@@ -633,27 +640,27 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label for="ammonia" class="form-label">Ammonia (NH₃)</label>
                             <input type="number" class="form-control" id="ammonia" placeholder="Enter threshold for Ammonia">
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label for="nitrogen" class="form-label">Nitrogen Oxides (NOₓ)</label>
                             <input type="number" class="form-control" id="nitrogen" placeholder="Enter threshold for Nitrogen Oxides">
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label for="alcohol" class="form-label">Alcohol</label>
                             <input type="number" class="form-control" id="alcohol" placeholder="Enter threshold for Alcohol">
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label for="benzene" class="form-label">Benzene</label>
                             <input type="number" class="form-control" id="benzene" placeholder="Enter threshold for Benzene">
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label for="smoke" class="form-label">Smoke</label>
                             <input type="number" class="form-control" id="smoke" placeholder="Enter threshold for Smoke">
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label for="co2" class="form-label">Carbon Dioxide (CO₂)</label>
                             <input type="number" class="form-control" id="co2" placeholder="Enter threshold for CO₂">
                         </div>
@@ -671,27 +678,27 @@
             <div class="container">
     <div class="aqi-container">
         <div class="center-circle" id="center-circle">
-            <span id="aqi-status" class="status">Moderate</span>
+            <span id="aqi-status">Moderate</span>
         </div>
         <div class="aqi-item aqi-o3">
-            <span class="aqi-value" id="aqi-o3-value">133</span>
+            <span id="aqi-o3-value">133</span>
             <span>µg/m³</span>
             <span>O₃</span>
         </div>
         <div class="aqi-item aqi-no2">
-            <span class="aqi-value" id="aqi-no2-value">103</span>
+            <span id="aqi-no2-value">103</span>
             <span>µg/m³</span>
             <span>NO₂</span>
         </div>
         <div class="aqi-item aqi-pm25">
-            <span class="aqi-value" id="aqi-pm25-value">138</span>
+            <span id="aqi-pm25-value">138</span>
             <span>µg/m³</span>
-            <span>PM </span>
+            <span>2.5</span>
         </div>
         <div class="aqi-item aqi-pm10">
-            <span class="aqi-value" id="aqi-pm10-value">526</span>
+            <span id="aqi-pm10-value">526</span>
             <span>µg/m³</span>
-            <span>PM </span>
+            <span>10</span>
         </div>
     </div>
 </div>
@@ -701,18 +708,19 @@
 
             <div class="col-lg-8 ">
                 <div class="content-container p-3">
-                    <div class="row px-5 py-4">
-                        Air Index
-
-                    </div><div class="box-item2" style="position:absolute;top:10px;right:90px;">
+                    <div class="box-item2" style="position:absolute;top:10px;right:60px;">
                         <a id="last-updated" style="text-decoration:none;">
                           Last Updated: <span id="date-time"></span>
                         </a>
                     </div>
-                    <div class="row px-5">
-                      <div class="col-lg-4"> 
+                    <div class="row px-5  h3">
+                        Air Index
 
-    <div class="quality-card ">
+                    </div>
+                    <div class="row px-5">
+                      <div class="col-lg-4 "> 
+
+    <div class="quality-card">
 <div class="title">Excellent</div>
 <div class="content">
 <div>Particles &lt; 2.5 µm (PM2.5)</div>
@@ -807,7 +815,7 @@
 </div>
 
 </div>
-<div class="col-lg-4 "> 
+<div class="col-lg-4"> 
 
 <div class="quality-card5">
 <div class="title">very poor</div>
@@ -831,9 +839,37 @@
             </div>
         </div>
     </div>
+<div class="row my-1 px-5 ">
+    <div class="col-lg-8 col-md-12 ">
+        <div class="card">
+            <div class="card-body">
+             
+              <div id="Historychart" style="width: 100%; height: 100%;"></div>
+
+            </div>
+          </div>
+    </div>
+    <div class="col-lg-4 col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="h4 ms-3 text-center">Temperature</div>
+                <div class="row"> 
+                    <div id="temperaturechart" style="width:100%;height:200px; background-color: #333; "></div>
+                </div>
+                <div class="h4 ms-3 text-center">Humidity</div>
+                <div class="row">
+                    
+                    <div id="humiditychart"  style="width:100%;height:150px; background-color: #333; "></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
 
     <div class="gauge-container">
-        <div class="gauge-item ">
+        <div class="gauge-item">
             <h3>Ozone</h3>
             <div class="chart-container"><div id="gauge-ozone" class="chart"></div></div>
             
@@ -1026,7 +1062,286 @@
     // Update every 10 seconds
     setInterval(updateDateTime, 10000);
 </script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    var options = {
+        series: [{
+            name: 'Air Quality Index',
+            data: [
+                {x: new Date('2024-08-01').getTime(), y: 10000000},
+                {x: new Date('2024-08-02').getTime(), y: 20000000},
+                {x: new Date('2024-08-03').getTime(), y: 30000000},
+                {x: new Date('2024-08-04').getTime(), y: 40000000},
+                {x: new Date('2024-08-05').getTime(), y: 50000000}
+            ]
+        }],
+        chart: {
+            type: 'line',
+            height: 400,
+            zoom: {
+                enabled: true,
+                type: 'x',
+                autoScaleYaxis: true
+            },
+            toolbar: {
+                autoSelected: 'zoom',
+                tools: {
+                    download: true,
+                    selection: true,
+                    zoom: true,
+                    zoomin: true,
+                    zoomout: true,
+                    pan: true,
+                    reset: true
+                },
+                background: '#000', // Black background for toolbar
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        markers: {
+            size: 5,
+        },
+        title: {
+            text: 'Air Quality Monitoring System',
+            align: 'left',
+            style: {
+                fontSize: '18px',
+                color: '#fff' // White title for visibility
+            }
+        },
+        xaxis: {
+            type: 'datetime',
+            labels: {
+                style: {
+                    colors: ['#fff'], // White labels for visibility
+                }
+            }
+        },
+        yaxis: {
+            labels: {
+                formatter: function (val) {
+                    return (val / 1000000).toFixed(0) + 'M';
+                },
+                style: {
+                    colors: ['#fff'], // White labels for visibility
+                }
+            },
+            title: {
+                text: 'Price',
+                style: {
+                    color: '#fff' // White title for visibility
+                }
+            }
+        },
+        tooltip: {
+            shared: false,
+            y: {
+                formatter: function (val) {
+                    return (val / 1000000).toFixed(0) + 'M';
+                }
+            }
+        },
+        theme: {
+            mode: 'dark' // Use dark mode for the chart
+        }
+    };
 
+    var chart = new ApexCharts(document.querySelector("#Historychart"), options);
+    chart.render();
+</script>
+<script>
+    var chart = bb.generate({
+         data: {
+             columns: [
+                 ["Temperature", 75] // Initial temperature value
+             ],
+             type: "gauge",
+             onclick: function (d, i) {
+                 console.log("onclick", d, i);
+             },
+             onover: function (d, i) {
+                 console.log("onover", d, i);
+             },
+             onout: function (d, i) {
+                 console.log("onout", d, i);
+             }
+         },
+         gauge: {
+             label: {
+                 format: function (value, ratio) {
+                     return value + " °C"; // Display temperature with unit
+                 }
+             },
+             min: 0, // Minimum temperature
+             max: 100 // Maximum temperature
+         },
+         tooltip: {
+             show: true,
+             format: {
+                 value: function (value, ratio, id) {
+                     return value + " °C"; // Tooltip value format
+                 }
+             },
+             contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+                 return `<div style="background-color: ${color(d[0])}; color: #000; padding: 5px; border-radius: 3px;">
+                             <strong>${d[0].name}</strong><br>
+                             ${d[0].value} °C
+                         </div>`;
+             }
+         },
+         color: {
+             pattern: [
+                 "#FF0000", // Red
+                 "#F97600", // Orange
+                 "#F6C600", // Yellow
+                 "#60B044"  // Green
+             ],
+             threshold: {
+                 values: [
+                     30, // Adjust threshold values for temperature range
+                     60,
+                     90,
+                     100
+                 ]
+             }
+         },
+         size: {
+             height: 180
+         },
+         bindto: "#temperaturechart" // Bind chart to a div with this ID
+     });
+ 
+     // Simulating temperature changes over time
+     setTimeout(function() {
+         chart.load({
+             columns: [["Temperature", 20]]
+         });
+     }, 1000);
+ 
+     setTimeout(function() {
+         chart.load({
+             columns: [["Temperature", 45]]
+         });
+     }, 2000);
+ 
+     setTimeout(function() {
+         chart.load({
+             columns: [["Temperature", 70]]
+         });
+     }, 3000);
+ 
+     setTimeout(function() {
+         chart.load({
+             columns: [["Temperature", 90]]
+         });
+     }, 4000);
+ 
+     setTimeout(function() {
+         chart.load({
+             columns: [["Temperature", 100]]
+         });
+     }, 5000);
+ 
+ </script>
+ 
+ 
+ <script>
+    var chart1 = bb.generate({
+         data: {
+             columns: [
+                 ["Humidity", 55] // Initial humidity value
+             ],
+             type: "gauge",
+             onclick: function (d, i) {
+                 console.log("onclick", d, i);
+             },
+             onover: function (d, i) {
+                 console.log("onover", d, i);
+             },
+             onout: function (d, i) {
+                 console.log("onout", d, i);
+             }
+         },
+         gauge: {
+             label: {
+                 format: function (value, ratio) {
+                     return value + " %"; // Display humidity with unit
+                 }
+             },
+             min: 0, // Minimum humidity
+             max: 100 // Maximum humidity
+         },
+         tooltip: {
+             show: true,
+             format: {
+                 value: function (value, ratio, id) {
+                     return value + " %"; // Tooltip value format
+                 }
+             },
+             contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+                 return `<div style="background-color: ${color(d[0])}; color: #000; padding: 5px; border-radius: 3px;">
+                             <strong>${d[0].name}</strong><br>
+                             ${d[0].value} %
+                         </div>`;
+             }
+         },
+         color: {
+             pattern: [
+                 "#60B044", // Green
+                 "#F6C600", // Yellow
+                 "#F97600", // Orange
+                 "#FF0000"  // Red
+             ],
+             threshold: {
+                 values: [
+                     30, // Adjust threshold values for humidity range
+                     60,
+                     90,
+                     100
+                 ]
+             }
+         },
+         size: {
+             height: 180
+         },
+         bindto: "#humiditychart" // Bind chart to a div with this ID
+     });
+ 
+     // Simulating humidity changes over time
+     setTimeout(function() {
+         chart1.load({
+             columns: [["Humidity", 20]]
+         });
+     }, 1000);
+ 
+     setTimeout(function() {
+         chart1.load({
+             columns: [["Humidity", 45]]
+         });
+     }, 2000);
+ 
+     setTimeout(function() {
+         chart1.load({
+             columns: [["Humidity", 70]]
+         });
+     }, 3000);
+ 
+     setTimeout(function() {
+         chart1.load({
+             columns: [["Humidity", 90]]
+         });
+     }, 4000);
+ 
+     setTimeout(function() {
+         chart1.load({
+             columns: [["Humidity", 100]]
+         });
+     }, 5000);
+ 
+ </script>
+ 
 </body>
 
 </html>
