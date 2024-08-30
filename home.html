@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css">
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <style>
         body {
             margin: 0;
@@ -572,7 +572,7 @@
         <i class="fa fa-history me-2" title="History"></i> History
     </a>
 </div>
-<i class="fa-solid fa-circle" style="font-size:25px; color: #09ff00; box-shadow: 0px 0px 20px rgba(9, 255, 0, 0.7); border-radius: 50%;"></i>
+<div id="status-indicator"></div>
 
 <!-- Updated time -->
 <div>
@@ -600,7 +600,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="Historyform">
                         <div class="mb-3">
                             <label for="startDate" class="form-label">Start Date</label>
                             <input type="date" class="form-control" id="startDate" required>
@@ -609,21 +609,12 @@
                             <label for="endDate" class="form-label">End Date</label>
                             <input type="date" class="form-control" id="endDate" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="parameter" class="form-label">Select Parameter</label>
-                            <select class="form-control" id="parameter"  required>
-                                <option value="NH3">Ammonia (NH₃)</option>
-                                <option value="NOx">Nitrogen Oxides (NOₓ)</option>
-                                <option value="Alcohol">Alcohol</option>
-                                <option value="Benzene">Benzene</option>
-                                <option value="Smoke">Smoke</option>
-                                <option value="CO2">Carbon Dioxide (CO₂)</option>
-                            </select>
-                        </div>
+                        
                         <button type="button" class="btn btn-danger" class="close" data-dismiss="modal">close</button>
                         <button type="reset" class="btn btn-warning">Clear</button>
                         <button type="submit" class="btn btn-success">Download CSV</button>
                     </form>
+                    
                 </div>
             </div>
         </div>
@@ -640,7 +631,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="ThresholdForm">
+                        <div class="mb-2">
+                            <label for="Temperature" class="form-label">Temperature </label>
+                            <input type="number" class="form-control" id="Temperature" placeholder="Enter threshold for Temperature">
+                        </div>
+                        <div class="mb-2">
+                            <label for="Humidity" class="form-label">Humidity </label>
+                            <input type="number" class="form-control" id="Humidity" placeholder="Enter threshold for Humidity">
+                        </div>
                         <div class="mb-2">
                             <label for="ammonia" class="form-label">Ammonia (NH₃)</label>
                             <input type="number" class="form-control" id="ammonia" placeholder="Enter threshold for Ammonia">
@@ -669,6 +668,7 @@
                         <button type="reset" class="btn btn-warning">Clear</button>
                         <button type="submit" class="btn btn-primary">Set Threshold</button>
                     </form>
+                    
                 </div>
             </div>
         </div>
@@ -684,22 +684,23 @@
         <div class="aqi-item aqi-o3">
             <span id="aqi-o3-value">133</span>
             <span>µg/m³</span>
-            <span>O₃</span>
+            <span>Co2</span>
         </div>
         <div class="aqi-item aqi-no2">
             <span id="aqi-no2-value">103</span>
             <span>µg/m³</span>
-            <span>NO₂</span>
+            <span>NH3</span>
         </div>
         <div class="aqi-item aqi-pm25">
             <span id="aqi-pm25-value">138</span>
             <span>µg/m³</span>
-            <span>2.5</span>
+            <span>Smoke</span>
         </div>
         <div class="aqi-item aqi-pm10">
             <span id="aqi-pm10-value">526</span>
             <span>µg/m³</span>
-            <span>10</span>
+            <span>NO2</span>
+           
         </div>
     </div>
 </div>
@@ -711,133 +712,132 @@
                 <div class="content-container p-3">
                     <div class="box-item2" style="position:absolute;top:10px;right:60px;">
                         <a id="last-updated" style="text-decoration:none;">
-                          Last Updated: <span id="date-time"></span>
+                            Last Updated: <span id="date-time"></span>
                         </a>
                     </div>
-                    <div class="row px-5  h3">
+                    <div class="row px-5 h3">
                         Air Index
-
                     </div>
                     <div class="row px-5">
-                      <div class="col-lg-4 "> 
-
-    <div class="quality-card">
-<div class="title">Excellent</div>
-<div class="content">
-<div>Particles &lt; 2.5 µm (PM2.5)</div>
-<div>0-10</div>
-<div>Particles &lt; 10 µm (PM10)</div>
-<div>0-20</div>
-<div>Nitrogen dioxide (NO2)</div>
-<div>0-40</div>
-<div>Ozone (O3)</div>
-<div>0-50</div>
-<div>Sulphur dioxide (SO2)</div>
-<div>0-100</div>
-</div>
-</div>
-
-</div>
-<div class="col-lg-4"> 
-
-<div class="quality-card1">
-<div class="title">Good</div>
-<div class="content">
-<div>Particles &lt; 2.5 µm (PM2.5)</div>
-<div>0-10</div>
-<div>Particles &lt; 10 µm (PM10)</div>
-<div>0-20</div>
-<div>Nitrogen dioxide (NO2)</div>
-<div>0-40</div>
-<div>Ozone (O3)</div>
-<div>0-50</div>
-<div>Sulphur dioxide (SO2)</div>
-<div>0-100</div>
-</div>
-</div>
-
-</div>
-<div class="col-lg-4"> 
-
-<div class="quality-card2">
-<div class="title">Fair</div>
-<div class="content">
-<div>Particles &lt; 2.5 µm (PM2.5)</div>
-<div>0-10</div>
-<div>Particles &lt; 10 µm (PM10)</div>
-<div>0-20</div>
-<div>Nitrogen dioxide (NO2)</div>
-<div>0-40</div>
-<div>Ozone (O3)</div>
-<div>0-50</div>
-<div>Sulphur dioxide (SO2)</div>
-<div>0-100</div>
-</div>
-</div>
-
-</div>
-            </div>
-            <div class="row mt-5 px-5">
-                      <div class="col-lg-4"> 
-
-    <div class="quality-card3">
-<div class="title">Moderate</div>
-<div class="content">
-<div>Particles &lt; 2.5 µm (PM2.5)</div>
-<div>0-10</div>
-<div>Particles &lt; 10 µm (PM10)</div>
-<div>0-20</div>
-<div>Nitrogen dioxide (NO2)</div>
-<div>0-40</div>
-<div>Ozone (O3)</div>
-<div>0-50</div>
-<div>Sulphur dioxide (SO2)</div>
-<div>0-100</div>
-</div>
-</div>
-
-</div>
-<div class="col-lg-4"> 
-
-<div class="quality-card4">
-<div class="title">poor</div>
-<div class="content">
-<div>Particles &lt; 2.5 µm (PM2.5)</div>
-<div>0-10</div>
-<div>Particles &lt; 10 µm (PM10)</div>
-<div>0-20</div>
-<div>Nitrogen dioxide (NO2)</div>
-<div>0-40</div>
-<div>Ozone (O3)</div>
-<div>0-50</div>
-<div>Sulphur dioxide (SO2)</div>
-<div>0-100</div>
-</div>
-</div>
-
-</div>
-<div class="col-lg-4"> 
-
-<div class="quality-card5">
-<div class="title">very poor</div>
-<div class="content">
-<div>Particles &lt; 2.5 µm (PM2.5)</div>
-<div>0-10</div>
-<div>Particles &lt; 10 µm (PM10)</div>
-<div>0-20</div>
-<div>Nitrogen dioxide (NO2)</div>
-<div>0-40</div>
-<div>Ozone (O3)</div>
-<div>0-50</div>
-<div>Sulphur dioxide (SO2)</div>
-<div>0-100</div>
-</div>
-</div>
-
-</div>
-            </div>
+                        <div class="col-lg-4">
+                            <div class="quality-card">
+                                <div class="title">Excellent</div>
+                                <div class="content">
+                                    <div>Alcohol</div>
+                                    <div>0-2.0166</div>
+                                    <div>Benzene</div>
+                                    <div>0-1.15234</div>
+                                    <div>CO2</div>
+                                    <div>0-2.59277</div>
+                                    <div>NH3</div>
+                                    <div>0-2.88086</div>
+                                    <div>NOx</div>
+                                    <div>0-1.44043</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="quality-card1">
+                                <div class="title">Good</div>
+                                <div class="content">
+                                    <div>Alcohol</div>
+                                    <div>2.0167-4.0332</div>
+                                    <div>Benzene</div>
+                                    <div>1.15235-2.30468</div>
+                                    <div>CO2</div>
+                                    <div>2.59278-5.18554</div>
+                                    <div>NH3</div>
+                                    <div>2.88087-5.76172</div>
+                                    <div>NOx</div>
+                                    <div>1.44044-2.88086</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="quality-card2">
+                                <div class="title">Fair</div>
+                                <div class="content">
+                                    <div>Alcohol</div>
+                                    <div>4.0333-6.0498</div>
+                                    <div>Benzene</div>
+                                    <div>2.30469-3.45702</div>
+                                    <div>CO2</div>
+                                    <div>5.18555-7.77831</div>
+                                    <div>NH3</div>
+                                    <div>5.76173-8.64258</div>
+                                    <div>NOx</div>
+                                    <div>2.88087-4.32129</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3 px-5">
+                        <div class="col-lg-4">
+                            <div class="quality-card3">
+                                <div class="title">Moderate</div>
+                                <div class="content">
+                                    <div>Alcohol</div>
+                                    <div>6.0499-8.0664</div>
+                                    <div>Benzene</div>
+                                    <div>3.45703-4.60936</div>
+                                    <div>CO2</div>
+                                    <div>7.77832-10.37108</div>
+                                    <div>NH3</div>
+                                    <div>8.64259-11.52344</div>
+                                    <div>NOx</div>
+                                    <div>4.32130-5.76172</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="quality-card4">
+                                <div class="title">Poor</div>
+                                <div class="content">
+                                    <div>Alcohol</div>
+                                    <div>8.0665-10.0830</div>
+                                    <div>Benzene</div>
+                                    <div>4.60937-5.76170</div>
+                                    <div>CO2</div>
+                                    <div>10.37109-12.96385</div>
+                                    <div>NH3</div>
+                                    <div>11.52345-14.40430</div>
+                                    <div>NOx</div>
+                                    <div>5.76173-7.20215</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="quality-card5">
+                                <div class="title">Very Poor</div>
+                                <div class="content">
+                                    <div>Alcohol</div>
+                                    <div>10.0831+</div>
+                                    <div>Benzene</div>
+                                    <div>5.76171+</div>
+                                    <div>CO2</div>
+                                    <div>12.96386+</div>
+                                    <div>NH3</div>
+                                    <div>14.40431+</div>
+                                    <div>NOx</div>
+                                    <div>7.20216+</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
+
+
+
+
+
+
+
+
+
+
+
         </div>
     </div>
 <div class="row my-1 px-5 ">
@@ -871,210 +871,573 @@
 
     <div class="gauge-container">
         <div class="gauge-item">
-            <h3>Ozone</h3>
-            <div class="chart-container"><div id="gauge-ozone" class="chart"></div></div>
+            <h3>Carbon Dioxide</h3>
+            <div class="chart-container"><div id="Carbon-Dioxide" class="chart"></div></div>
             
         </div>
         <div class="gauge-item">
-            <h3>Humidity</h3>
-            <div class="chart-container"> <div id="gauge-humidity" class="chart"></div></div>
+            <h3>Nitragen Oxide</h3>
+            <div class="chart-container"> <div id="Nitragen-Oxide" class="chart"></div></div>
         </div>
         <div class="gauge-item">
-            <h3>Temperature</h3> 
-            <div class="chart-container"> <div id="gauge-temperature" class="chart"></div></div> 
+            <h3>Smoke</h3> 
+            <div class="chart-container"> <div id="Smoke" class="chart"></div></div> 
         </div>
         <div class="gauge-item">
-            <h3>Air Pollution PM 2.5</h3>
-            <div class="chart-container"> <div id="gauge-pm25" class="chart"></div></div>
+            <h3>Benzene</h3>
+            <div class="chart-container"> <div id="Benzene" class="chart"></div></div>
         </div>
         <div class="gauge-item">
-            <h3>Air Pollution PM 10</h3>
-            <div class="chart-container">   <div id="gauge-pm10" class="chart"></div></div>
+            <h3>Alcohol</h3>
+            <div class="chart-container">   <div id="ALcohol" class="chart"></div></div>
         </div>
         <div class="gauge-item">
-            <h3>Nitrogen Dioxide</h3>
-            <div class="chart-container">    <div id="gauge-no2" class="chart"></div></div>
+            <h3>Ammonia</h3>
+            <div class="chart-container">    <div id="Ammonia" class="chart"></div></div>
         </div>
     </div>
 <footer class="text-center text-white">&copy;All Rights Reserved By OLIVE IOT</footer>
     <!-- <script src="https://cdn.jsdelivr.net/npm/@progress/kendo-ui/js/kendo.all.min.js"></script> -->
-  
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const gauges = {};
 
-            function getRandomNumber(min, max) {
-                return Math.floor(Math.random() * (max - min + 1)) + min;
-            }
-
-            function createGauge(elementId, value, max, label) {
-                const chart = echarts.init(document.getElementById(elementId));
-                const option = {
-                    tooltip: {
-                        formatter: '{a} <br/>{b} : {c}%' // Tooltip format
-                    },
-                    series: [
-                        {
-                            name: 'Pressure', // Series name (could be customized per gauge)
-                            type: 'gauge',
-                            progress: {
-                                show: true
-                            },
-                            detail: {
-                                valueAnimation: true,
-                                formatter: '{value}',
-                                color: '#FFFFFF', // Set detail text color to white
-                                offsetCenter: [0, '70%'], // Adjust the position of the value
-                                fontSize: 30 // Increase font size if necessary
-                            },
-                            data: [
-                                {
-                                    value: value,
-                                    name: label
-                                }
-                            ],
-                            axisLine: {
-                                lineStyle: {
-                                    color: [
-                                        [0.25, '#FF6E76'],
-                                        [0.5, '#FDDD60'],
-                                        [0.75, '#58D9F9'],
-                                        [1, '#7CFFB2']
-                                    ],
-                                    width: 6
-                                }
-                            },
-                            pointer: {
-                                length: '70%',
-                                width: 8
-                            },
-                            axisLabel: {
-                                color: '#FFFFFF' // Set axis labels color to white
-                            },
-                            title: {
-                                show: true,
-                                color: '#FFFFFF', // Set title text color to white
-                                offsetCenter: [0, '120%'], // Position the label below the gauge
-                                fontSize: 20 // Set font size for the label
-                            }
-                        }
-                    ]
-                };
-                chart.setOption(option);
-                gauges[elementId] = chart; // Store the chart instance for future updates
-            }
-
-            function updateGauge(elementId, value) {
-                const chart = gauges[elementId];
-                const option = chart.getOption();
-                option.series[0].data[0].value = value;
-                chart.setOption(option);
-            }
-
-            // Create initial gauges
-            createGauge('gauge-ozone', getRandomNumber(0, 100), 160, 'Ozone');
-            createGauge('gauge-humidity', getRandomNumber(0, 100), 100, 'Humidity');
-            createGauge('gauge-temperature', getRandomNumber(0, 100), 30, 'Temperature');
-            createGauge('gauge-pm25', getRandomNumber(0, 100), 500, 'PM 2.5');
-            createGauge('gauge-pm10', getRandomNumber(0, 100), 600, 'PM 10');
-            createGauge('gauge-no2', getRandomNumber(0, 100), 1000, 'NO2');
-
-            // Update gauges every 10 seconds
-            setInterval(function () {
-                updateGauge('gauge-ozone', getRandomNumber(0, 100));
-                updateGauge('gauge-humidity', getRandomNumber(0, 100));
-                updateGauge('gauge-temperature', getRandomNumber(0, 100));
-                updateGauge('gauge-pm25', getRandomNumber(0, 100));
-                updateGauge('gauge-pm10', getRandomNumber(0, 100));
-                updateGauge('gauge-no2', getRandomNumber(0, 100));
-            }, 10000);
-        });
-    </script>
 <script>
+   
+</script>
+<!-- Add Firebase SDK -->
+<script type="module">
+
+    let globalData;
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getDatabase, set,ref, onValue } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDneqQZ9szh4daUFD1o1rsX0FCfGKPhGyY",
+        authDomain: "air-quality-system-9a6c1.firebaseapp.com",
+        databaseURL: "https://air-quality-system-9a6c1-default-rtdb.firebaseio.com",
+        projectId: "air-quality-system-9a6c1",
+        storageBucket: "air-quality-system-9a6c1.appspot.com",
+        messagingSenderId: "1034056344108",
+        appId: "1:1034056344108:web:ce1af9f288c85945e42789",
+        measurementId: "G-MVVVFSTL9M"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+  
+    // Reference to your sensorData node
+    const sensorDataRef = ref(database, 'sensorData');
+
     document.addEventListener('DOMContentLoaded', function () {
+        const gauges = {};
+
         function getRandomNumber(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
-        function updateAQI() {
-            const o3 = getRandomNumber(0, 160);
-            const no2 = getRandomNumber(0, 1000);
-            const pm25 = getRandomNumber(0, 500);
-            const pm10 = getRandomNumber(0, 600);
-
-            document.getElementById('aqi-o3-value').textContent = o3;
-            document.getElementById('aqi-no2-value').textContent = no2;
-            document.getElementById('aqi-pm25-value').textContent = pm25;
-            document.getElementById('aqi-pm10-value').textContent = pm10;
-
-            const aqiStatus = document.getElementById('aqi-status');
-            const centerCircle = document.getElementById('center-circle');
-            const aqiLevels = [o3, no2, pm25, pm10];
-            const maxAQI = Math.max(...aqiLevels);
-
-            if (maxAQI <= 50) {
-                aqiStatus.textContent = 'Excellent';
-                centerCircle.style.backgroundColor = '#00c853ce';
-                centerCircle.style.boxShadow = '0 0 30px 30px rgba(0, 200, 83, 0.4), 0 0 40px 20px rgba(0, 200, 83, 0.2)';
-            } else if (maxAQI <= 100) {
-                aqiStatus.textContent = 'Good';
-                centerCircle.style.backgroundColor = '#e91e62c9';
-                centerCircle.style.boxShadow = '0 0 30px 30px rgba(233, 30, 98, 0.4), 0 0 40px 20px rgba(233, 30, 98, 0.2)';
-            } else if (maxAQI <= 150) {
-                aqiStatus.textContent = 'Fair';
-                centerCircle.style.backgroundColor = '#00ffff94';
-                centerCircle.style.boxShadow = '0 0 30px 30px rgba(0, 255, 255, 0.4), 0 0 40px 20px rgba(0, 255, 255, 0.2)';
-            } else if (maxAQI <= 200) {
-                aqiStatus.textContent = 'Moderate';
-                centerCircle.style.backgroundColor = '#ffeb3bc4';
-                centerCircle.style.boxShadow = '0 0 30px 30px rgba(255, 235, 59, 0.4), 0 0 40px 20px rgba(255, 235, 59, 0.2)';
-            } else if (maxAQI <= 300) {
-                aqiStatus.textContent = 'Poor';
-                centerCircle.style.backgroundColor = '#ff9900d3';
-                centerCircle.style.boxShadow = '0 0 30px 30px rgba(255, 153, 0, 0.4), 0 0 40px 20px rgba(255, 153, 0, 0.2)';
-            } else if (maxAQI <= 400) {
-                aqiStatus.textContent = 'Very Poor';
-                centerCircle.style.backgroundColor = '#f44336da';
-                centerCircle.style.boxShadow = '0 0 30px 30px rgba(244, 67, 54, 0.4), 0 0 40px 20px rgba(244, 67, 54, 0.2)';
-            }
-            else {
-                aqiStatus.textContent = 'Excellent';
-                centerCircle.style.backgroundColor = '#00c853ce';
-                centerCircle.style.boxShadow = '0 0 30px 30px rgba(0, 200, 83, 0.4), 0 0 40px 20px rgba(0, 200, 83, 0.2)';
+        function createGauge(elementId, value, max, label) {
+            const chart = echarts.init(document.getElementById(elementId));
+            const option = {
+                tooltip: {
+                    formatter: '{a} <br/>{b} : {c}' // Adjust this as needed
+                },
+                series: [
+                    {
+                        name: label, // Set the series name
+                        type: 'gauge',
+                        max: max, // Set the maximum value for the gauge
+                        progress: {
+                            show: true
+                        },
+                        detail: {
+                            valueAnimation: true,
+                            formatter: '{value}', // Adjust the formatter as needed
+                            color: '#FFFFFF', // Set detail text color to white
+                            offsetCenter: [0, '70%'], // Adjust the position of the value
+                            fontSize: 30 // Increase font size if necessary
+                        },
+                        data: [
+                            {
+                                value: value,
+                                name: label
+                            }
+                        ],
+                        axisLine: {
+                            lineStyle: {
+                                color: [
+                                    [0.25, '#FF6E76'],
+                                    [0.5, '#FDDD60'],
+                                    [0.75, '#58D9F9'],
+                                    [1, '#7CFFB2']
+                                ],
+                                width: 6
+                            }
+                        },
+                        pointer: {
+                            length: '70%',
+                            width: 8
+                        },
+                        axisLabel: {
+                            color: '#FFFFFF' // Set axis labels color to white
+                        },
+                        title: {
+                            show: true,
+                            color: '#FFFFFF', // Set title text color to white
+                            offsetCenter: [0, '120%'], // Position the label below the gauge
+                            fontSize: 20 // Set font size for the label
+                        }
+                    }
+                ]
+            };
+            chart.setOption(option);
+            gauges[elementId] = chart; // Store the chart instance for future updates
+        }
         
-            }
+         
+
+        function updateGauge(elementId, value) {
+            const chart = gauges[elementId];
+            const option = chart.getOption();
+            option.series[0].data[0].value = parseFloat(value).toFixed(2); // Format value to 2 decimal places
+            chart.setOption(option);
         }
 
-        updateAQI();
-        setInterval(updateAQI, 20000);
+        // Create initial gauges
+        createGauge('Carbon-Dioxide', 1, 10, 'CO 2');
+        createGauge('Nitragen-Oxide',  2, 10, 'NO 2');
+        createGauge('Smoke',  1, 10, 'Smoke');
+        createGauge('Benzene',1, 10, 'Benzene');
+        createGauge('ALcohol', 0, 10, 'Alcohol');
+        createGauge('Ammonia', 0, 10, 'Ammonia');
+
+        // Listen for changes in sensorData and update the dashboard
+        onValue(sensorDataRef, (snapshot) => {
+           let data=snapshot.val();
+            console.log(data);
+            updateAQI(data);
+            updateDashboard(data);
+            updateDashboardTemp(data.temperature);
+            updateDashboardHum(data.humidity);
+        });
+
+        // Function to update the dashboard
+        function updateDashboard(data) {
+            const rawTime = data.time; // "30-8-2024 16:16:11"
+            const [day, month, yearAndTime] = rawTime.split('-');
+            const [year, time] = yearAndTime.split(' ');
+            const formattedTime = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${time}`;
+            const lastUpdatedTime = new Date(formattedTime);
+            const currentTime = new Date();
+            
+            console.log("Parsed Date:", lastUpdatedTime);
+            console.log("Current Date:", currentTime);
+            
+            // Calculate the time difference in minutes
+            const timeDifference = (currentTime - lastUpdatedTime) / 60000; // Difference in minutes
+            
+            const statusIndicator = document.getElementById('status-indicator');
+            if (timeDifference <= 5) {
+                // Online (within 5 minutes)
+                statusIndicator.innerHTML = '<i class="fa-solid fa-circle" style="font-size:25px; color: #09ff00; box-shadow: 0px 0px 20px rgba(9, 255, 0, 0.7); border-radius: 50%;"></i>';
+            } else {
+                // Offline (greater than 5 minutes)
+                statusIndicator.innerHTML = '<i class="fa-solid fa-circle" style="font-size:25px; color: #ff0000; box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.7); border-radius: 50%;"></i>';
+            }
+            
+            
+            // Update the gauges
+            updateGauge('Carbon-Dioxide', data.CO2, 10);
+            updateGauge('Nitragen-Oxide', data.NOx, 10);
+            updateGauge('Smoke', data.Smoke, 10);
+            updateGauge('Benzene', data.Benzene, 10);
+            updateGauge('ALcohol', data.Alcohol, 10);
+            updateGauge('Ammonia', data.NH3, 10);
+            
+           
+            document.getElementById('date-time').innerText = 'Last Updated: ' + data.time;
+        }
+        
     });
-</script>
-<script>
-    function updateDateTime() {
-        const now = new Date();
-        const formattedDate = now.toLocaleDateString();
-        const formattedTime = now.toLocaleTimeString();
-        document.getElementById('date-time').innerText = `${formattedDate} ${formattedTime}`;
+
+
+
+function updateDashboardTemp(data){
+    var chart = bb.generate({
+        data: {
+            columns: [
+                ["Temperature", 75] // Initial temperature value
+            ],
+            type: "gauge",
+            onclick: function (d, i) {
+                console.log("onclick", d, i);
+            },
+            onover: function (d, i) {
+                console.log("onover", d, i);
+            },
+            onout: function (d, i) {
+                console.log("onout", d, i);
+            }
+        },
+        gauge: {
+            label: {
+                format: function (value, ratio) {
+                    return value + " °C"; // Display temperature with unit
+                }
+            },
+            min: 0, // Minimum temperature
+            max: 100 // Maximum temperature
+        },
+        tooltip: {
+            show: true,
+            format: {
+                value: function (value, ratio, id) {
+                    return value + " °C"; // Tooltip value format
+                }
+            },
+            contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+                return `<div style="background-color: ${color(d[0])}; color: #000; padding: 5px; border-radius: 3px;">
+                            <strong>${d[0].name}</strong><br>
+                            ${d[0].value} °C
+                        </div>`;
+            }
+        },
+        color: {
+            pattern: [
+
+
+            "#60B044" ,
+            "#F6C600",
+            "#F97600",
+                "#FF0000" 
+               
+            ],
+            threshold: {
+                values: [
+                    40, // Adjust threshold values for temperature range
+                    60,
+                    90,
+                    100
+                ]
+            }
+        },
+        size: {
+            height: 180
+        },
+        bindto: "#temperaturechart" // Bind chart to a div with this ID
+    });
+
+
+setTimeout(function() {
+    chart.load({
+        columns: [["Temperature", data]]
+    });
+}, 1000);
+}
+
+
+
+
+
+
+
+function updateDashboardHum(data){
+var chart1 = bb.generate({
+    data: {
+        columns: [
+            ["Humidity", 55] // Initial humidity value
+        ],
+        type: "gauge",
+        onclick: function (d, i) {
+            console.log("onclick", d, i);
+        },
+        onover: function (d, i) {
+            console.log("onover", d, i);
+        },
+        onout: function (d, i) {
+            console.log("onout", d, i);
+        }
+    },
+    gauge: {
+        label: {
+            format: function (value, ratio) {
+                return value + " %"; // Display humidity with unit
+            }
+        },
+        min: 0, // Minimum humidity
+        max: 100 // Maximum humidity
+    },
+    tooltip: {
+        show: true,
+        format: {
+            value: function (value, ratio, id) {
+                return value + " %"; // Tooltip value format
+            }
+        },
+        contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+            return `<div style="background-color: ${color(d[0])}; color: #000; padding: 5px; border-radius: 3px;">
+                        <strong>${d[0].name}</strong><br>
+                        ${d[0].value} %
+                    </div>`;
+        }
+    },
+    color: {
+        pattern: [
+            
+            "#FF0000" ,
+            "#F97600", 
+            "#F6C600", 
+            "#60B044"        ],
+        threshold: {
+            values: [
+                30, // Adjust threshold values for humidity range
+                60,
+                90,
+                100
+            ]
+        }
+    },
+    size: {
+        height: 180
+    },
+    bindto: "#humiditychart" // Bind chart to a div with this ID
+});
+setTimeout(function() {
+    chart1.load({
+        columns: [["Humidity", data]]
+    });
+}, 1000);
+}
+
+
+
+
+
+
+
+
+
+
+function updateAQI(data) {
+    const alcohol = parseFloat(data.Alcohol).toFixed(2);
+    const benzene = parseFloat(data.Benzene).toFixed(2);
+    const co2 = parseFloat(data.CO2).toFixed(2);
+    const nh3 = parseFloat(data.NH3).toFixed(2);
+    const nox = parseFloat(data.NOx).toFixed(2);
+
+
+    document.getElementById('aqi-o3-value').textContent = co2;
+    document.getElementById('aqi-no2-value').textContent = nox;
+    document.getElementById('aqi-pm25-value').textContent = nh3;
+    document.getElementById('aqi-pm10-value').textContent = benzene;
+
+    const aqiStatus = document.getElementById('aqi-status');
+    const centerCircle = document.getElementById('center-circle');
+    const aqiLevels = [alcohol, benzene, co2, nh3, nox];
+    const maxAQI = Math.max(...aqiLevels);
+
+    if (maxAQI <= 2) {
+        aqiStatus.textContent = 'Excellent';
+        centerCircle.style.backgroundColor = '#00c853ce';
+        centerCircle.style.boxShadow = '0 0 30px 30px rgba(0, 200, 83, 0.4), 0 0 40px 20px rgba(0, 200, 83, 0.2)';
+    } else if (maxAQI <= 4) {
+        aqiStatus.textContent = 'Good';
+        centerCircle.style.backgroundColor = '#e91e62c9';
+        centerCircle.style.boxShadow = '0 0 30px 30px rgba(233, 30, 98, 0.4), 0 0 40px 20px rgba(233, 30, 98, 0.2)';
+    } else if (maxAQI <= 6) {
+        aqiStatus.textContent = 'Fair';
+        centerCircle.style.backgroundColor = '#00ffff94';
+        centerCircle.style.boxShadow = '0 0 30px 30px rgba(0, 255, 255, 0.4), 0 0 40px 20px rgba(0, 255, 255, 0.2)';
+    } else if (maxAQI <= 8) {
+        aqiStatus.textContent = 'Moderate';
+        centerCircle.style.backgroundColor = '#ffeb3bc4';
+        centerCircle.style.boxShadow = '0 0 30px 30px rgba(255, 235, 59, 0.4), 0 0 40px 20px rgba(255, 235, 59, 0.2)';
+    } else if (maxAQI <= 10) {
+        aqiStatus.textContent = 'Poor';
+        centerCircle.style.backgroundColor = '#ff9900d3';
+        centerCircle.style.boxShadow = '0 0 30px 30px rgba(255, 153, 0, 0.4), 0 0 40px 20px rgba(255, 153, 0, 0.2)';
+    } else if (maxAQI > 10) {
+        aqiStatus.textContent = 'Very Poor';
+        centerCircle.style.backgroundColor = '#f44336da';
+        centerCircle.style.boxShadow = '0 0 30px 30px rgba(244, 67, 54, 0.4), 0 0 40px 20px rgba(244, 67, 54, 0.2)';
+    } else {
+        aqiStatus.textContent = 'Excellent';
+        centerCircle.style.backgroundColor = '#00c853ce';
+        centerCircle.style.boxShadow = '0 0 30px 30px rgba(0, 200, 83, 0.4), 0 0 40px 20px rgba(0, 200, 83, 0.2)';
     }
+}
 
-    // Initial call to set the time right away
-    updateDateTime();
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('Historyform');
 
-    // Update every 10 seconds
-    setInterval(updateDateTime, 10000);
-</script>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script>
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Get the selected values from the form
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+
+        console.log(`Form submitted with startDate: ${startDate}, endDate: ${endDate}`);
+
+        // Reference to your hourly data node
+        const hourlyDataRef = ref(database, 'hourlyData');
+
+        // Retrieve the data
+        onValue(hourlyDataRef, (snapshot) => {
+            const data = snapshot.val();
+            console.log('Data retrieved from Firebase:', data);
+
+            const csvData = [];
+            const headers = ['Date', 'Time', 'Temperature', 'Humidity', 'CO2', 'Alcohol', 'Benzene', 'NH3', 'NOx', 'Smoke'];
+
+            // Add header row to CSV data
+            csvData.push(headers);
+
+            // Iterate through the data to match the date range
+            for (const dateKey in data) {
+                if (data.hasOwnProperty(dateKey)) {
+                    const entries = data[dateKey];
+                    console.log(`Processing data for date: ${dateKey}`, entries);
+
+                    // Convert dateKey from DD-MM-YYYY to YYYY-MM-DD for comparison
+                    const [day, month, year] = dateKey.split('-');
+                    const entryDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                    console.log(`Converted entryDate for comparison: ${entryDate}`);
+
+                    if (entryDate >= startDate && entryDate <= endDate) {
+                        console.log(`Date ${entryDate} is within the selected range.`);
+                        for (const timeKey in entries) {
+                            if (entries.hasOwnProperty(timeKey)) {
+                                const entry = entries[timeKey];
+                                console.log(`Processing time: ${timeKey}, Entry:`, entry);
+
+                                csvData.push([
+                                    entryDate,
+                                    timeKey,
+                                    entry.temperature, 
+                                    entry.humidity, 
+                                    entry.CO2,
+                                    entry.Alcohol, 
+                                    entry.Benzene, 
+                                    entry.NH3, 
+                                    entry.NOx, 
+                                    entry.Smoke
+                                ]);
+                            }
+                        }
+                    } else {
+                        console.log(`Date ${entryDate} is outside the selected range.`);
+                    }
+                }
+            }
+
+            // Log final CSV data array to the console
+            console.log('Final CSV Data:', csvData);
+
+            // Convert to CSV and trigger download
+            if (csvData.length > 1) { // Ensure there is data to download
+                downloadCSV(csvData);
+            } else {
+                console.log('No data found within the selected date range.');
+                alert('No data found within the selected date range.');
+            }
+        });
+    });
+
+    function downloadCSV(data) {
+        // Create a CSV string
+        const csvString = data.map(row => row.join(',')).join('\n');
+
+        // Create a blob and download the file
+        const blob = new Blob([csvString], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = `data_${document.getElementById('startDate').value}_to_${document.getElementById('endDate').value}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+
+        console.log('CSV file downloaded:', a.download);
+    }
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('ThresholdForm');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Get the values from the form fields
+        const temperature = document.getElementById('Temperature').value;
+        const humidity = document.getElementById('Humidity').value;
+        const ammonia = document.getElementById('ammonia').value;
+        const nitrogen = document.getElementById('nitrogen').value;
+        const alcohol = document.getElementById('alcohol').value;
+        const benzene = document.getElementById('benzene').value;
+        const smoke = document.getElementById('smoke').value;
+        const co2 = document.getElementById('co2').value;
+
+        // Reference to the threshold node in Firebase
+        const thresholdRef = ref(database, 'threshold');
+
+        // Update the values in Firebase
+        set(thresholdRef, {
+            temperature: temperature,
+            humidity: humidity,
+            ammonia: ammonia,
+            nitrogen: nitrogen,
+            alcohol: alcohol,
+            benzene: benzene,
+            smoke: smoke,
+            co2: co2
+        }).then(() => {
+            alert('Thresholds updated successfully!');
+        }).catch((error) => {
+            console.error('Error updating thresholds:', error);
+        });
+    });
+});
+
+function calculateAverage(data) {
+    let sum = data.Alcohol + data.Benzene + data.CO2 + data.NH3 + data.NOx + data.Smoke;
+    let average = sum / 6;
+    return average;
+}
+
+
+
+
+    // Reference to your sensorData node
+    const HourDataRef = ref(database, 'hourlyData');
+
+    // Listen for data changes at the sensorData node
+    onValue(HourDataRef, (snapshot) =>  {
+    var hourlyData = snapshot.val();
+    var seriesData = [];
+    console.log(seriesData);
+
+    Object.keys(hourlyData).forEach(date => {
+        Object.keys(hourlyData[date]).forEach(hour => {
+            let data = hourlyData[date][hour];
+            let average = calculateAverage(data);
+
+            // Assuming 'date' is in DD-MM-YYYY format and 'hour' is in 24-hour format
+            let timestamp = new Date(`${date.split('-').reverse().join('-')}T${hour}:00:00`).getTime();
+
+            seriesData.push({ x: timestamp, y: average });
+        });
+    });
+
+    // Render the chart after data is retrieved
     var options = {
         series: [{
             name: 'Air Quality Index',
-            data: [
-                {x: new Date('2024-08-01').getTime(), y: 10000000},
-                {x: new Date('2024-08-02').getTime(), y: 20000000},
-                {x: new Date('2024-08-03').getTime(), y: 30000000},
-                {x: new Date('2024-08-04').getTime(), y: 40000000},
-                {x: new Date('2024-08-05').getTime(), y: 50000000}
-            ]
+            data: seriesData
         }],
         chart: {
             type: 'line',
@@ -1123,14 +1486,14 @@
         yaxis: {
             labels: {
                 formatter: function (val) {
-                    return (val / 1000000).toFixed(0) + 'M';
+                    return val.toFixed(2); // Display value as is without scaling
                 },
                 style: {
                     colors: ['#fff'], // White labels for visibility
                 }
             },
             title: {
-                text: 'Price',
+                text: 'Average Gas Concentration',
                 style: {
                     color: '#fff' // White title for visibility
                 }
@@ -1140,7 +1503,7 @@
             shared: false,
             y: {
                 formatter: function (val) {
-                    return (val / 1000000).toFixed(0) + 'M';
+                    return val.toFixed(2);
                 }
             }
         },
@@ -1151,197 +1514,15 @@
 
     var chart = new ApexCharts(document.querySelector("#Historychart"), options);
     chart.render();
+});
+
+
 </script>
-<script>
-    var chart = bb.generate({
-         data: {
-             columns: [
-                 ["Temperature", 75] // Initial temperature value
-             ],
-             type: "gauge",
-             onclick: function (d, i) {
-                 console.log("onclick", d, i);
-             },
-             onover: function (d, i) {
-                 console.log("onover", d, i);
-             },
-             onout: function (d, i) {
-                 console.log("onout", d, i);
-             }
-         },
-         gauge: {
-             label: {
-                 format: function (value, ratio) {
-                     return value + " °C"; // Display temperature with unit
-                 }
-             },
-             min: 0, // Minimum temperature
-             max: 100 // Maximum temperature
-         },
-         tooltip: {
-             show: true,
-             format: {
-                 value: function (value, ratio, id) {
-                     return value + " °C"; // Tooltip value format
-                 }
-             },
-             contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
-                 return `<div style="background-color: ${color(d[0])}; color: #000; padding: 5px; border-radius: 3px;">
-                             <strong>${d[0].name}</strong><br>
-                             ${d[0].value} °C
-                         </div>`;
-             }
-         },
-         color: {
-             pattern: [
-                 "#FF0000", // Red
-                 "#F97600", // Orange
-                 "#F6C600", // Yellow
-                 "#60B044"  // Green
-             ],
-             threshold: {
-                 values: [
-                     30, // Adjust threshold values for temperature range
-                     60,
-                     90,
-                     100
-                 ]
-             }
-         },
-         size: {
-             height: 180
-         },
-         bindto: "#temperaturechart" // Bind chart to a div with this ID
-     });
- 
-     // Simulating temperature changes over time
-     setTimeout(function() {
-         chart.load({
-             columns: [["Temperature", 20]]
-         });
-     }, 1000);
- 
-     setTimeout(function() {
-         chart.load({
-             columns: [["Temperature", 45]]
-         });
-     }, 2000);
- 
-     setTimeout(function() {
-         chart.load({
-             columns: [["Temperature", 70]]
-         });
-     }, 3000);
- 
-     setTimeout(function() {
-         chart.load({
-             columns: [["Temperature", 90]]
-         });
-     }, 4000);
- 
-     setTimeout(function() {
-         chart.load({
-             columns: [["Temperature", 100]]
-         });
-     }, 5000);
- 
- </script>
- 
- 
- <script>
-    var chart1 = bb.generate({
-         data: {
-             columns: [
-                 ["Humidity", 55] // Initial humidity value
-             ],
-             type: "gauge",
-             onclick: function (d, i) {
-                 console.log("onclick", d, i);
-             },
-             onover: function (d, i) {
-                 console.log("onover", d, i);
-             },
-             onout: function (d, i) {
-                 console.log("onout", d, i);
-             }
-         },
-         gauge: {
-             label: {
-                 format: function (value, ratio) {
-                     return value + " %"; // Display humidity with unit
-                 }
-             },
-             min: 0, // Minimum humidity
-             max: 100 // Maximum humidity
-         },
-         tooltip: {
-             show: true,
-             format: {
-                 value: function (value, ratio, id) {
-                     return value + " %"; // Tooltip value format
-                 }
-             },
-             contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
-                 return `<div style="background-color: ${color(d[0])}; color: #000; padding: 5px; border-radius: 3px;">
-                             <strong>${d[0].name}</strong><br>
-                             ${d[0].value} %
-                         </div>`;
-             }
-         },
-         color: {
-             pattern: [
-                 "#60B044", // Green
-                 "#F6C600", // Yellow
-                 "#F97600", // Orange
-                 "#FF0000"  // Red
-             ],
-             threshold: {
-                 values: [
-                     30, // Adjust threshold values for humidity range
-                     60,
-                     90,
-                     100
-                 ]
-             }
-         },
-         size: {
-             height: 180
-         },
-         bindto: "#humiditychart" // Bind chart to a div with this ID
-     });
- 
-     // Simulating humidity changes over time
-     setTimeout(function() {
-         chart1.load({
-             columns: [["Humidity", 20]]
-         });
-     }, 1000);
- 
-     setTimeout(function() {
-         chart1.load({
-             columns: [["Humidity", 45]]
-         });
-     }, 2000);
- 
-     setTimeout(function() {
-         chart1.load({
-             columns: [["Humidity", 70]]
-         });
-     }, 3000);
- 
-     setTimeout(function() {
-         chart1.load({
-             columns: [["Humidity", 90]]
-         });
-     }, 4000);
- 
-     setTimeout(function() {
-         chart1.load({
-             columns: [["Humidity", 100]]
-         });
-     }, 5000);
- 
- </script>
+
+
+
+
+
  
 </body>
 
