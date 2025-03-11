@@ -7,7 +7,7 @@
 
 A comprehensive real-time air quality monitoring system that collects data from IoT sensors and visualizes air quality metrics through an intuitive dashboard. The system evaluates air quality based on standard indices and provides visual indicators for monitoring environmental conditions.
 
-!(https://github.com/Prathaban-G/air-Monitoring-Dashboard/blob/main/Sample%20Images/air-dashboard.png))
+![Dashboard](https://github.com/Prathaban-G/air-Monitoring-Dashboard/blob/main/Sample%20Images/air-dashboard.png))
 
 ## ✨ Features
 
