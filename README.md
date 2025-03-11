@@ -7,7 +7,7 @@
 
 A comprehensive real-time air quality monitoring system that collects data from IoT sensors and visualizes air quality metrics through an intuitive dashboard. The system evaluates air quality based on standard indices and provides visual indicators for monitoring environmental conditions.
 
-![Dashboard Preview](https://i.imgur.com/your-dashboard-image.jpg)
+!(https://github.com/Prathaban-G/air-Monitoring-Dashboard/blob/main/Sample%20Images/air-dashboard.png))
 
 ## ✨ Features
 
@@ -40,15 +40,15 @@ A comprehensive real-time air quality monitoring system that collects data from 
 ## 📸 Screenshots
 
 ### Main Dashboard
-![Main Dashboard](https://i.imgur.com/your-main-dashboard.jpg)
+![Main Dashboard](https://github.com/Prathaban-G/air-Monitoring-Dashboard/blob/main/Sample%20Images/air-dash.png)
 The primary interface showing real-time air quality metrics, gauge charts, and status indicators.
 
 ### Historical Trends
-![Historical Trends](https://i.imgur.com/your-historical-trends.jpg)
+![Historical Trends](https://github.com/Prathaban-G/air-Monitoring-Dashboard/blob/main/Sample%20Images/air-history.png)
 Line charts displaying air quality trends over customizable time periods.
 
 ### Threshold Configuration
-![Threshold Settings](https://i.imgur.com/your-threshold-settings.jpg)
+![Threshold Settings](https://github.com/Prathaban-G/air-Monitoring-Dashboard/blob/main/Sample%20Images/air-threshold.png)
 Interface for setting and managing alert thresholds for different pollutants.
 
 ## 🚀 Live Demo
