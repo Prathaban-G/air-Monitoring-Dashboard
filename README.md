@@ -99,5 +99,5 @@ When air quality metrics exceed configured thresholds, the system:
 
 For questions, feedback, or collaboration opportunities:
 - Email: prathabang1234@gmail.com
-- LinkedIn: [Prathaban G](https://www.linkedin.com/in/your-profile/)
+- LinkedIn: [Prathaban G](https://www.linkedin.com/in/prathaban-g-4b8713289/)
 
